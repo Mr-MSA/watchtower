@@ -11,6 +11,8 @@ import (
 	"strings"
 )
 
+const version = "1.1"
+
 func main() {
 
 	// get home dir
@@ -29,6 +31,10 @@ func main() {
 	args := dropFlags(os.Args[1:])
 
 	// init
+	if args[0] == "version" {
+		fmt.Println(version)
+		os.Exit(0)
+	}
 	if args[0] == "init" {
 
 		if err := os.Mkdir(homedir+"/.watch-client/", os.ModePerm); err != nil {
