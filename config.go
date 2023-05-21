@@ -73,3 +73,24 @@ func downloadFile(filepath string, fileurl string) (err error) {
 
 	return nil
 }
+
+func setMethod(args []string) string {
+	switch args[0] {
+	case "regexp":
+		if args[1] == "test" {
+			return "POST"
+		} else if args[1] == "apply" {
+			return "PUT"
+		}
+	case "orch":
+		return "PATCH"
+	case "put":
+		return "PATCH"
+	case "delete":
+		return "DELETE"
+	case "create":
+		return "PATCH"
+	}
+
+	return "GET"
+}

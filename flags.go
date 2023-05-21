@@ -94,26 +94,42 @@ func showHelp(args []string, config map[string]interface{}) {
         add total=ture
 `)
 	} else {
-		fmt.Printf(`watch init
+		fmt.Printf(`watch help flags
+watch version
+watch init
 
 watch get single target {{target_name}}
 watch get single subdomain {{subdomain}}
 watch get single live {{domain}}
+watch get single http {{subdomain}}
+
 watch get subdomains domain {{domain}}
 watch get subdomains scope {{scope}}
 watch get subdomains all
+
 watch get lives scope {{scope}}
 watch get lives domain {{domain}}
 watch get lives all
+
+watch get http scope {{scope}}
+watch get http domain {{domain}}
+watch get http all
+
 watch get latest subdomains domain {{domain}}
 watch get latest subdomains scope {{scope}}
 watch get latest subdomains all
+
 watch get latest lives domain {{domain}}
 watch get latest lives scope {{scope}}
 watch get latest lives all
+
 watch get targets
-watch get public targets
+watch get public targets all
+watch get public targets platform {{platform}}
+
 watch get fresh
+watch get statistics sqs
+watch get technologies all
 
 watch regexp list -body-file body.txt
 watch regexp apply -body-file body.txt
@@ -127,12 +143,15 @@ watch orch passive enum scope {{scope}}
 watch orch resolution all
 watch orch resolution scope {{scope}}
 
+watch put resolution 
+watch put subdomain {{id}}
+watch put orch resolution
+watch put orch http
+
 watch delete target {{target_name}}
+watch create target
 
-watch put target -body-file body.txt
-watch put resolution -body-file body.txt
-
-watch help flags
+(use -body-file body.txt to set body)
 `)
 	}
 	os.Exit(0)

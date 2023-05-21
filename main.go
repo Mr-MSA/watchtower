@@ -153,22 +153,7 @@ func main() {
 
 	// set default request methods
 	if flagArgs.Method == "" {
-		switch args[0] {
-		case "regexp":
-			if args[1] == "test" {
-				flagArgs.Method = "POST"
-			} else if args[1] == "apply" {
-				flagArgs.Method = "PUT"
-			}
-		case "orch":
-			flagArgs.Method = "PATCH"
-		case "put":
-			flagArgs.Method = "PATCH"
-		case "delete":
-			flagArgs.Method = "DELETE"
-		default:
-			flagArgs.Method = "GET"
-		}
+		flagArgs.Method = setMethod(args)
 	}
 
 	// set loop
