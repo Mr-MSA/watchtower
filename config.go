@@ -3,8 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -41,4 +43,33 @@ func envVariable(key string) string {
 
 	val := os.Getenv(key)
 	return val
+}
+func downloadFile(filepath string, fileurl string) (err error) {
+
+	// Create blank file
+	file, err := os.Create(filepath)
+	if err != nil {
+		return err
+	}
+	client := http.Client{
+		CheckRedirect: func(r *http.Request, via []*http.Request) error {
+			r.URL.Opaque = r.URL.Path
+			return nil
+		},
+	}
+	// Put content on file
+	resp, err := client.Get(fileurl)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	_, err = io.Copy(file, resp.Body)
+	if err != nil {
+		return err
+	}
+
+	defer file.Close()
+
+	return nil
 }

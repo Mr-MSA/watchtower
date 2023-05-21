@@ -12,10 +12,10 @@ import (
 )
 
 func main() {
-	// validate baseurl
-	if envVariable("baseURL") == "WATCH_SERVER" {
-		fmt.Println("Please set watch server address at ~/.watch-client/.env")
-		os.Exit(0)
+	// get home dir
+	homedir, err := os.UserHomeDir()
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// validate args
@@ -27,11 +27,31 @@ func main() {
 	// get arguments
 	args := dropFlags(os.Args[1:])
 
-	// read and parse configurations
-	homedir, err := os.UserHomeDir()
-	if err != nil {
-		log.Fatal(err)
+	// init
+	if args[0] == "init" {
+
+		if err := os.Mkdir(homedir+"/.watch-client/", os.ModePerm); err != nil {
+			log.Fatal(err)
+		}
+
+		if err := downloadFile(homedir+"/.watch-client/.env", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/.env"); err != nil {
+			fmt.Println(err)
+			os.Exit(0)
+		}
+
+		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json"); err != nil {
+			fmt.Println(err)
+			os.Exit(0)
+		}
 	}
+
+	// validate baseurl
+	if envVariable("baseURL") == "WATCH_SERVER" {
+		fmt.Println("Please set watch server address at ~/.watch-client/.env")
+		os.Exit(0)
+	}
+
+	// read and parse configurations
 	config := ReadJSON(homedir + "/.watch-client/structure.json")
 
 	// show help

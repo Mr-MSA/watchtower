@@ -94,7 +94,9 @@ func showHelp(args []string, config map[string]interface{}) {
         add total=ture
 `)
 	} else {
-		fmt.Printf(`watch get single target {{target_name}}
+		fmt.Printf(`watch init
+
+watch get single target {{target_name}}
 watch get single subdomain {{subdomain}}
 watch get single live {{domain}}
 watch get subdomains domain {{domain}}
