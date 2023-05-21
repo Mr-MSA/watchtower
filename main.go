@@ -12,6 +12,7 @@ import (
 )
 
 func main() {
+
 	// get home dir
 	homedir, err := os.UserHomeDir()
 	if err != nil {
@@ -20,7 +21,7 @@ func main() {
 
 	// validate args
 	if len(os.Args[1:]) == 0 {
-		fmt.Println("Error")
+		fmt.Println("Execute: watch help")
 		os.Exit(0)
 	}
 
@@ -41,6 +42,12 @@ func main() {
 
 		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json"); err != nil {
 			fmt.Println(err)
+			os.Exit(0)
+		}
+	} else {
+		// check if config dir exists
+		if _, err := os.Stat(homedir + "/.watch-client"); os.IsNotExist(err) {
+			fmt.Println("Path " + homedir + "/.watch-client not found! please execute 'watch init' ")
 			os.Exit(0)
 		}
 	}
