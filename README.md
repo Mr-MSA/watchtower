@@ -13,5 +13,4 @@ git clone https://github.com/Mr-MSA/watch
 cd Watch-Client
 go build .
 ./init.sh
-
 ```
