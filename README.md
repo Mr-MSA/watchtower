@@ -2,9 +2,15 @@
 Go client for watch
 
 ## Installation
-Run following commands:
+Go install:
 ```
-git clone https://github.com/Mr-MSA/Watch-Client
+go install github.com/Mr-MSA/watch@latest
+watch init
+```
+Manual:
+```
+git clone https://github.com/Mr-MSA/watch
 cd Watch-Client
 go build .
-./watch help
+./init.sh
+```
