@@ -37,8 +37,10 @@ func main() {
 	}
 	if args[0] == "init" {
 
-		if err := os.Mkdir(homedir+"/.watch-client/", os.ModePerm); err != nil {
-			log.Fatal(err)
+		if _, err := os.Stat(homedir + "/.watch-client"); os.IsNotExist(err) {
+			if err := os.Mkdir(homedir+"/.watch-client/", os.ModePerm); err != nil {
+				log.Fatal(err)
+			}
 		}
 
 		if err := downloadFile(homedir+"/.watch-client/.env", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/.env"); err != nil {
