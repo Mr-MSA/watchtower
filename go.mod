@@ -1,4 +1,4 @@
-module watch
+module github.com/Mr-MSA/watch
 
 go 1.17
 
