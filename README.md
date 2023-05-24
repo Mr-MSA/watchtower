@@ -7,6 +7,7 @@ Go install:
 go install github.com/Mr-MSA/watch@latest
 watch init
 ```
++ set watch addres in ~/.watch-client/.env
 Manual:
 ```
 git clone https://github.com/Mr-MSA/watch
