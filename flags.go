@@ -131,10 +131,10 @@ watch get fresh
 watch get statistics sqs
 watch get technologies all
 
-watch regexp list -body-file body.txt
+watch regexp list
 watch regexp apply -body-file body.txt
-watch regexp test scope {{scope}}
-watch regexp test all
+watch regexp test scope {{scope}} -body-file body.txt
+watch regexp test all  -body-file body.txt
 
 watch orch clean database scope {{scope}}
 watch orch clean database all 
@@ -144,7 +144,7 @@ watch orch resolution all
 watch orch resolution scope {{scope}}
 
 watch put resolution 
-watch put subdomain {{id}}
+watch put subdomain {{scope name}}
 watch put orch resolution
 watch put orch http
 

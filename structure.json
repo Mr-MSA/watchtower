@@ -2,10 +2,13 @@
   "delete": {
     "target": "{{base}}/targets/{{arg}}"
   },
+  "technologies": {
+    "list": "{{base}}/technologies"
+  },
+  "targets": {
+    "list": "{{base}}/targets"
+  },
   "get": {
-    "technologies": {
-      "all": "{{base}}/technologies"
-    },
     "single": {
       "subdomain": "{{base}}/subdomains/details/{{arg}}",
       "live": "{{base}}/subdomains/live/details/{{arg}}",
@@ -44,7 +47,23 @@
         "domain": "{{base}}/subdomains/http?domain={{arg}}&latest=true"
       }
     },
-    "targets": "{{base}}/targets",
+    "fresh": {
+      "subdomains": {
+        "all": "{{base}}/subdomains?fresh=true",
+        "domain": "{{base}}/subdomains?domain={{arg}}&fresh=true",
+        "scope": "{{base}}/subdomains?scope={{arg}}&fresh=true"
+      },
+      "lives": {
+        "all": "{{base}}/subdomains/live?latest=true",
+        "domain": "{{base}}/subdomains/live?domain={{arg}}&fresh=true",
+        "scope": "{{base}}/subdomains/live?scope={{arg}}&fresh=true"
+      },
+      "http": {
+        "scope": "{{base}}/subdomains/http?scope={{arg}}&fresh=true",
+        "all": "{{base}}/subdomains/http?fresh=true",
+        "domain": "{{base}}/subdomains/http?domain={{arg}}&fresh=true"
+      }
+    },
     "result": "{{base}}/test?{{arg}}",
     "public": {
       "targets": {
@@ -52,7 +71,6 @@
         "all": "{{base}}/public-targets"
       }
     },
-    "fresh": "{{base}}/subdomains/live?fresh=true",
     "orch": {
       "tasks": {
         "active": "{{base}}/orchestration/tasks/active",
