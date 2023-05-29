@@ -62,7 +62,7 @@ func main() {
 
 	// validate baseurl
 	if envVariable("baseURL") == "WATCH_SERVER" {
-		fmt.Println("Please set watch server address at ~/.watch-client/.env")
+		fmt.Println("Please set watch server address at "+homedir+"/.watch-client/.env")
 		os.Exit(0)
 	}
 
