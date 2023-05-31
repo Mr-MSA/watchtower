@@ -62,7 +62,7 @@ func main() {
 
 	// validate baseurl
 	if envVariable("baseURL") == "WATCH_SERVER" {
-		fmt.Println("Please set watch server address at "+homedir+"/.watch-client/.env")
+		fmt.Println("Please set watch server address at " + homedir + "/.watch-client/.env")
 		os.Exit(0)
 	}
 
@@ -144,15 +144,6 @@ func main() {
 		api = api + "?"
 	}
 
-	// set endpoint by flags
-	if flagArgs.JSON {
-		api = fmt.Sprintf("%s&json=true", api)
-	}
-
-	if flagArgs.Provider != "" {
-		api = fmt.Sprintf("%s&provider=%s", api, flagArgs.Provider)
-	}
-
 	// set default request methods
 	if flagArgs.Method == "" {
 		flagArgs.Method = setMethod(args)
@@ -160,10 +151,12 @@ func main() {
 
 	// set loop
 	if args[0] == "get" {
-		if args[1] == "lives" || args[1] == "fresh" || args[1] == "subdomains" || args[1] == "latest" {
+		if args[1] == "lives" || args[1] == "fresh" || args[1] == "subdomains" || args[1] == "latest" || args[1] == "http" {
 			flagArgs.Loop = true
 		}
 	}
+
+	// set endpoint by flags
 
 	if flagArgs.Count {
 		api = fmt.Sprintf("%s&count=true", api)
@@ -177,6 +170,14 @@ func main() {
 		api = fmt.Sprintf("%s&total=true", api)
 	}
 
+	if flagArgs.JSON {
+		api = fmt.Sprintf("%s&json=true", api)
+	}
+
+	if flagArgs.Provider != "" {
+		api = fmt.Sprintf("%s&provider=%s", api, flagArgs.Provider)
+	}
+	fmt.Println(api)
 	// limit res
 	if flagArgs.Limit {
 		flagArgs.Loop = false
