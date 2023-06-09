@@ -17,6 +17,7 @@ type intelArgs struct {
 	Limit          bool
 	ReverseCompare bool
 	Provider       string
+	Date           string
 	Method         string
 	Compare        string
 	Body           string
@@ -46,6 +47,7 @@ func dropFlags(args []string) []string {
 func defineIntelArgumentFlags(intelFlags *flag.FlagSet, args *intelArgs) {
 
 	intelFlags.StringVar(&args.Provider, "provider", "", "set providers")
+	intelFlags.StringVar(&args.Date, "date", "", "set date")
 	intelFlags.StringVar(&args.Method, "method", "", "http request method")
 	intelFlags.StringVar(&args.Body, "body", "", "request body")
 	intelFlags.StringVar(&args.BodyFile, "body-file", "", "request body file")
@@ -92,6 +94,8 @@ func showHelp(args []string, config map[string]interface{}) {
         add cdn=ture
   --total
         add total=ture
+  --date 
+		add date=$date
 `)
 	} else {
 		fmt.Printf(`watch help flags

@@ -177,6 +177,11 @@ func main() {
 	if flagArgs.Provider != "" {
 		api = fmt.Sprintf("%s&provider=%s", api, flagArgs.Provider)
 	}
+
+	if flagArgs.Date != "" {
+		api = fmt.Sprintf("%s&date=%s", api, flagArgs.Date)
+	}
+
 	fmt.Println(api)
 	// limit res
 	if flagArgs.Limit {
