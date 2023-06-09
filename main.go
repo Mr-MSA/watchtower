@@ -182,7 +182,6 @@ func main() {
 		api = fmt.Sprintf("%s&date=%s", api, flagArgs.Date)
 	}
 
-	fmt.Println(api)
 	// limit res
 	if flagArgs.Limit {
 		flagArgs.Loop = false

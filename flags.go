@@ -95,7 +95,7 @@ func showHelp(args []string, config map[string]interface{}) {
   --total
         add total=ture
   --date 
-		add date=$date
+        add date=$date
 `)
 	} else {
 		fmt.Printf(`watch help flags
