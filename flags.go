@@ -9,19 +9,24 @@ import (
 )
 
 type intelArgs struct {
-	JSON           bool
-	Loop           bool
-	Count          bool
-	CDN            bool
-	Total          bool
-	Limit          bool
-	ReverseCompare bool
-	Provider       string
-	Date           string
-	Method         string
-	Compare        string
-	Body           string
-	BodyFile       string
+	JSON            bool
+	Loop            bool
+	Count           bool
+	CDN             bool
+	Total           bool
+	Limit           bool
+	Internal        bool
+	NoLimit         bool
+	ReverseCompare  bool
+	ExcludeScope    string
+	ExcludeDomain   string
+	ExcludeProvider string
+	Provider        string
+	Date            string
+	Method          string
+	Compare         string
+	Body            string
+	BodyFile        string
 }
 
 func dropFlags(args []string) []string {
@@ -48,6 +53,9 @@ func defineIntelArgumentFlags(intelFlags *flag.FlagSet, args *intelArgs) {
 
 	intelFlags.StringVar(&args.Provider, "provider", "", "set providers")
 	intelFlags.StringVar(&args.Date, "date", "", "set date")
+	intelFlags.StringVar(&args.ExcludeProvider, "exclude-provider", "", "exclude provider from result")
+	intelFlags.StringVar(&args.ExcludeScope, "exclude-scope", "", "exclude scope from result")
+	intelFlags.StringVar(&args.ExcludeDomain, "exclude-domain", "", "exclude domain from result")
 	intelFlags.StringVar(&args.Method, "method", "", "http request method")
 	intelFlags.StringVar(&args.Body, "body", "", "request body")
 	intelFlags.StringVar(&args.BodyFile, "body-file", "", "request body file")
@@ -56,6 +64,8 @@ func defineIntelArgumentFlags(intelFlags *flag.FlagSet, args *intelArgs) {
 	intelFlags.BoolVar(&args.JSON, "json", false, "show output as json")
 	intelFlags.BoolVar(&args.Count, "count", false, "add count=true")
 	intelFlags.BoolVar(&args.CDN, "cdn", false, "add cdn=true")
+	intelFlags.BoolVar(&args.Internal, "internal", false, "add internal=true")
+	intelFlags.BoolVar(&args.NoLimit, "no-limit", false, "add no_limit=true")
 	intelFlags.BoolVar(&args.Total, "total", false, "add total=true")
 	intelFlags.BoolVar(&args.Loop, "loop", false, "get all pages")
 	intelFlags.BoolVar(&args.Limit, "limit", false, "limit results")
@@ -70,32 +80,29 @@ func showHelp(args []string, config map[string]interface{}) {
 
 	if len(args) == 2 && args[1] == "flags" {
 		fmt.Printf(`Flags:
-  --body string
-        request body
-  --body-file string
-        request body file
-  --compare string
-        compare response
-  --rc
-        reverse compare
-  --count
-        add count=true
-  --json
-        show output as json
-  --limit
-        limit results
-  --loop
-        get all pages
-  --method string
-        http request method
-  --provider string
-        set providers
-  --cdn
-        add cdn=ture
-  --total
-        add total=ture
-  --date 
-        add date=$date
+   --body "bodystring" (request body)
+   --body-file "filename" (request body file name)
+   --method string (http request method)
+		
+   --compare "filename" (compare response)
+   --rc (reverse compare)
+		  
+   --limit (limit results)
+   --loop (get all pages)
+		
+   --count (show count of results)
+   --json (show output as json)
+   --cdn (add cdn=ture)
+   --total (add total=true)
+   --internal (add internal=true)
+   --no-limit (add not_limit=true)
+		
+   --date string (set date of results)
+   --provider string (filter by providers)
+		
+   --exclude-domain string (exclude a domain from results)
+   --exclude-provider string (exclude a provider from results)
+   --exclude-scope string (exclude a scope from results)
 `)
 	} else {
 		fmt.Printf(`watch help flags

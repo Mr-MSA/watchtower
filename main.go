@@ -161,25 +161,35 @@ func main() {
 	if flagArgs.Count {
 		api = fmt.Sprintf("%s&count=true", api)
 	}
-
 	if flagArgs.CDN {
 		api = fmt.Sprintf("%s&cdn=true", api)
 	}
-
+	if flagArgs.Internal {
+		api = fmt.Sprintf("%s&internal=true", api)
+	}
+	if flagArgs.NoLimit {
+		api = fmt.Sprintf("%s&no_limit=true", api)
+	}
 	if flagArgs.Total {
 		api = fmt.Sprintf("%s&total=true", api)
 	}
-
 	if flagArgs.JSON {
 		api = fmt.Sprintf("%s&json=true", api)
 	}
-
 	if flagArgs.Provider != "" {
 		api = fmt.Sprintf("%s&provider=%s", api, flagArgs.Provider)
 	}
-
 	if flagArgs.Date != "" {
 		api = fmt.Sprintf("%s&date=%s", api, flagArgs.Date)
+	}
+	if flagArgs.ExcludeDomain != "" {
+		api = fmt.Sprintf("%s&exclude_domain=%s", api, flagArgs.ExcludeDomain)
+	}
+	if flagArgs.ExcludeScope != "" {
+		api = fmt.Sprintf("%s&exclude_scope=%s", api, flagArgs.ExcludeScope)
+	}
+	if flagArgs.ExcludeProvider != "" {
+		api = fmt.Sprintf("%s&exclude_provider=%s", api, flagArgs.ExcludeProvider)
 	}
 
 	// limit res
@@ -226,20 +236,19 @@ func main() {
 			log.Fatal(err)
 		}
 
-		defer f.Close()
 		_, err2 := f.WriteString(out)
 		if err2 != nil {
 			log.Fatal(err2)
 		}
+		f.Close()
 
 		var f1, f2 string
+		f1 = ".tmp"
+		f2 = flagArgs.Compare
+
 		if flagArgs.ReverseCompare {
 			f1 = flagArgs.Compare
 			f2 = ".tmp"
-
-		} else {
-			f1 = ".tmp"
-			f2 = flagArgs.Compare
 		}
 
 		if _, err := os.Stat(flagArgs.Compare); err != nil {
@@ -248,12 +257,8 @@ func main() {
 		}
 
 		cmd := exec.Command("grep", "-Fxvf", f1, f2)
-		stdout, err := cmd.Output()
+		stdout, _ := cmd.Output()
 
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
 		fmt.Print(string(stdout))
 	}
 
