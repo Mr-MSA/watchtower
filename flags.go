@@ -138,7 +138,18 @@ watch get targets
 watch get public targets all
 watch get public targets platform {{platform}}
 
-watch get fresh
+watch get fresh subdomains all 
+watch get fresh subdomains scope {{scope}} 
+watch get fresh subdomains domiain {{domain}} 
+
+watch get fresh lives all 
+watch get fresh lives scope {{scope}} 
+watch get fresh lives domiain {{domain}} 
+
+watch get fresh http all 
+watch get fresh http scope {{scope}} 
+watch get fresh http domiain {{domain}} 
+
 watch get statistics sqs
 watch get technologies all
 
