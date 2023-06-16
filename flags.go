@@ -134,7 +134,7 @@ watch get latest lives domain {{domain}}
 watch get latest lives scope {{scope}}
 watch get latest lives all
 
-watch get targets
+watch get targets list
 watch get public targets all
 watch get public targets platform {{platform}}
 

@@ -5,10 +5,10 @@
   "technologies": {
     "list": "{{base}}/technologies"
   },
-  "targets": {
-    "list": "{{base}}/targets"
-  },
   "get": {
+    "targets": {
+      "list": "{{base}}/targets"
+    },
     "single": {
       "subdomain": "{{base}}/subdomains/details/{{arg}}",
       "live": "{{base}}/subdomains/live/details/{{arg}}",
