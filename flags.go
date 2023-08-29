@@ -151,7 +151,7 @@ watch get fresh http scope {{scope}}
 watch get fresh http domain {{domain}} 
 
 watch get statistics sqs
-watch get technologies all
+watch get technologies list
 
 watch regexp list
 watch regexp apply -body-file body.txt
