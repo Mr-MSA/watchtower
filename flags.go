@@ -108,6 +108,7 @@ func showHelp(args []string, config map[string]interface{}) {
 		fmt.Printf(`watch help flags
 watch version
 watch init
+watch update
 
 watch get single target {{target_name}}
 watch get single subdomain {{subdomain}}

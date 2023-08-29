@@ -51,6 +51,13 @@ func main() {
 			fmt.Println(err)
 			os.Exit(0)
 		}
+	}else if args[0] == "update" { 
+		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json"); err != nil {
+			fmt.Println(err)
+			
+		}
+		fmt.Println("structure.json updated!")
+		os.Exit(0)
 	} else {
 		// check if config dir exists
 		if _, err := os.Stat(homedir + "/.watch-client"); os.IsNotExist(err) {

@@ -2,10 +2,10 @@
   "delete": {
     "target": "{{base}}/targets/{{arg}}"
   },
-  "technologies": {
-    "list": "{{base}}/technologies"
-  },
   "get": {
+    "technologies": {
+      "list": "{{base}}/technologies"
+    },
     "targets": {
       "list": "{{base}}/targets"
     },
