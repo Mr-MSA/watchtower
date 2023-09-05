@@ -47,14 +47,13 @@ func main() {
 			fmt.Println(err)
 		}
 
-		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json"); err != nil {
+		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json?2"); err != nil {
 			fmt.Println(err)
 			os.Exit(0)
 		}
 	}else if args[0] == "update" { 
-		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json"); err != nil {
+		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json?2"); err != nil {
 			fmt.Println(err)
-			
 		}
 		fmt.Println("structure.json updated!")
 		os.Exit(0)
@@ -217,7 +216,7 @@ func main() {
 			resp := MakeHttpRequest(api+"&limit=1000&page="+strconv.Itoa(i), flagArgs, body)
 
 			if flagArgs.Compare == "" {
-				fmt.Print(resp)
+				fmt.Println(resp)
 			} else {
 				out += resp
 
@@ -265,7 +264,7 @@ func main() {
 		cmd := exec.Command("grep", "-Fxvf", f1, f2)
 		stdout, _ := cmd.Output()
 
-		fmt.Print(string(stdout))
+		fmt.Println(string(stdout))
 	}
 
 }
