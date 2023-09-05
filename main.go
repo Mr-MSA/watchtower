@@ -36,21 +36,29 @@ func main() {
 	// init
 
 	if args[0] == "init" {
-
 		if _, err := os.Stat(homedir + "/.watch-client"); os.IsNotExist(err) {
 			if err := os.Mkdir(homedir+"/.watch-client/", os.ModePerm); err != nil {
 				log.Fatal(err)
 			}
 		}
 
-		if err := downloadFile(homedir+"/.watch-client/.env", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/.env"); err != nil {
-			fmt.Println(err)
-		}
+		if len(args) == 2 && args[1] == "autocomplete" {
+			if err := downloadFile(homedir+"/.watch-client/_watch", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/_watch?"+ver); err != nil {
+				fmt.Println(err)
+			}
+			exec.Command("curl", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/init-autocomplete.sh", "|", "zsh")
+		} else if len(args) == 1 {
 
-		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json?"+ver); err != nil {
-			fmt.Println(err)
-			os.Exit(0)
+			if err := downloadFile(homedir+"/.watch-client/.env", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/.env"); err != nil {
+				fmt.Println(err)
+			}
+
+			if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json?"+ver); err != nil {
+				fmt.Println(err)
+			}
 		}
+		os.Exit(0)
+
 	} else if args[0] == "update" {
 		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json?"+ver); err != nil {
 			fmt.Println(err)
@@ -100,7 +108,7 @@ func main() {
 
 	// validate api
 	if api == "" {
-		fmt.Println("API not found")
+		fmt.Println("Command/API not found")
 		os.Exit(0)
 	}
 

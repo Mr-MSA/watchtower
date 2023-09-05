@@ -118,6 +118,7 @@ func showHelp(args []string, config map[string]interface{}) {
 watch help flags
 watch help version
 watch init
+watch init autocomplete
 watch update
 
 watch get single target {{target_name}}
