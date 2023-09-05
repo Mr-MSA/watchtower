@@ -46,7 +46,14 @@ func main() {
 			if err := downloadFile(homedir+"/.watch-client/_watch", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/_watch?"+ver); err != nil {
 				fmt.Println(err)
 			}
-			exec.Command("curl", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/init-autocomplete.sh", "|", "zsh")
+			if err := downloadFile(homedir+"/.watch-client/init-autocomplete.sh", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/init-autocomplete.sh?"+ver); err != nil {
+				fmt.Println(err)
+			}
+			cmd := exec.Command("zsh", homedir+"/.watch-client/init-autocomplete.sh")
+			_, err := cmd.Output()
+			if err != nil {
+				fmt.Println(err)
+			}
 		} else if len(args) == 1 {
 
 			if err := downloadFile(homedir+"/.watch-client/.env", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/.env"); err != nil {
