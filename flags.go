@@ -19,6 +19,8 @@ type intelArgs struct {
 	NoLimit         bool
 	ReverseCompare  bool
 	ExcludeScope    string
+	Status 			string
+	Title 			string
 	ExcludeDomain   string
 	ExcludeProvider string
 	Provider        string
@@ -52,6 +54,8 @@ func dropFlags(args []string) []string {
 func defineIntelArgumentFlags(intelFlags *flag.FlagSet, args *intelArgs) {
 
 	intelFlags.StringVar(&args.Provider, "provider", "", "set providers")
+	intelFlags.StringVar(&args.Status, "status", "", "match status")
+	intelFlags.StringVar(&args.Title, "title", "", "match title")
 	intelFlags.StringVar(&args.Date, "date", "", "set date")
 	intelFlags.StringVar(&args.ExcludeProvider, "exclude-provider", "", "exclude provider from result")
 	intelFlags.StringVar(&args.ExcludeScope, "exclude-scope", "", "exclude scope from result")
@@ -99,6 +103,8 @@ func showHelp(args []string, config map[string]interface{}) {
 		
    --date string (set date of results)
    --provider string (filter by providers)
+   --status string (filter by status)
+   --title string (filter by title)
 		
    --exclude-domain string (exclude a domain from results)
    --exclude-provider string (exclude a provider from results)

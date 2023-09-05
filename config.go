@@ -6,11 +6,15 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 
 	"github.com/joho/godotenv"
 )
+
+const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 
 func ReadJSON(filename string) map[string]interface{} {
 
@@ -93,4 +97,12 @@ func setMethod(args []string) string {
 	}
 
 	return "GET"
+}
+
+func RandStringBytes(n int) string {
+    b := make([]byte, n)
+    for i := range b {
+        b[i] = letterBytes[rand.Intn(len(letterBytes))]
+    }
+    return string(b)
 }

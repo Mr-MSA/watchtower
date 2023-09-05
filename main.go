@@ -29,6 +29,8 @@ func main() {
 
 	// get arguments
 	args := dropFlags(os.Args[1:])
+	var ver = RandStringBytes(20)
+	fmt.Println(ver)
 
 	// init
 	if args[0] == "version" {
@@ -47,12 +49,12 @@ func main() {
 			fmt.Println(err)
 		}
 
-		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json?2"); err != nil {
+		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json?"+ver); err != nil {
 			fmt.Println(err)
 			os.Exit(0)
 		}
 	}else if args[0] == "update" { 
-		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json?2"); err != nil {
+		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json?"+ver); err != nil {
 			fmt.Println(err)
 		}
 		fmt.Println("structure.json updated!")
@@ -183,6 +185,12 @@ func main() {
 	}
 	if flagArgs.Provider != "" {
 		api = fmt.Sprintf("%s&provider=%s", api, flagArgs.Provider)
+	}
+	if flagArgs.Title != "" {
+		api = fmt.Sprintf("%s&title=%s", api, flagArgs.Title)
+	}
+	if flagArgs.Status != "" {
+		api = fmt.Sprintf("%s&status=%s", api, flagArgs.Status)
 	}
 	if flagArgs.Date != "" {
 		api = fmt.Sprintf("%s&date=%s", api, flagArgs.Date)
