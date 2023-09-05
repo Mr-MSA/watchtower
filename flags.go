@@ -82,7 +82,10 @@ func showHelp(args []string, config map[string]interface{}) {
 		return
 	}
 
-	if len(args) == 2 && args[1] == "flags" {
+	if len(args) == 2 && args[1] == "version" {
+		fmt.Println(version)
+		os.Exit(0)
+	} else if len(args) == 2 && args[1] == "flags" {
 		fmt.Printf(`Flags:
    --body "bodystring" (request body)
    --body-file "filename" (request body file name)
@@ -111,8 +114,9 @@ func showHelp(args []string, config map[string]interface{}) {
    --exclude-scope string (exclude a scope from results)
 `)
 	} else {
-		fmt.Printf(`watch help flags
-watch version
+		fmt.Printf(`watch help
+watch help flags
+watch help version
 watch init
 watch update
 

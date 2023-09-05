@@ -34,10 +34,7 @@ func main() {
 	var ver = String(10)
 
 	// init
-	if args[0] == "version" {
-		fmt.Println(version)
-		os.Exit(0)
-	}
+
 	if args[0] == "init" {
 
 		if _, err := os.Stat(homedir + "/.watch-client"); os.IsNotExist(err) {
