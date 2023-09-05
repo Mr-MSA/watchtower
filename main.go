@@ -237,7 +237,7 @@ func main() {
 		// send http request to api endpoint
 		resp := MakeHttpRequest(api, flagArgs, body)
 		if flagArgs.Compare == "" {
-			fmt.Print(resp)
+			fmt.Println(resp)
 		} else {
 			out = resp
 		}
