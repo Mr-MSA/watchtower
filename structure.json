@@ -104,7 +104,11 @@
   "orch": {
     "resolution": {
       "scope": "{{base}}/orchestration/targets/name-resolution?scope={{arg}}",
-      "all": "{{base}}/orchestration/targets/name-resolution?scope={{arg}}"
+      "all": "{{base}}/orchestration/targets/name-resolution"
+    },
+    "http":{
+      "all":"{{base}}/orchestration/targets/http",
+      "scope":"{{base}}/orchestration/targets/http?scope={{arg}}"
     },
     "clean": {
       "database": {

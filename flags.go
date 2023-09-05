@@ -165,6 +165,8 @@ watch orch passive enum all
 watch orch passive enum scope {{scope}}
 watch orch resolution all
 watch orch resolution scope {{scope}}
+watch orch http all
+watch orch http scope {{scope}}
 
 watch put resolution 
 watch put subdomain {{scope name}}
