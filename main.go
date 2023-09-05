@@ -225,22 +225,24 @@ func main() {
 			resp := MakeHttpRequest(api+"&limit=1000&page="+strconv.Itoa(i), flagArgs, body)
 
 			if flagArgs.Compare == "" {
-				fmt.Println(resp)
+				fmt.Print(resp)
 			} else {
 				out += resp
 
 			}
 		}
+		fmt.Printf("\n")
 
 	} else {
 
 		// send http request to api endpoint
 		resp := MakeHttpRequest(api, flagArgs, body)
 		if flagArgs.Compare == "" {
-			fmt.Println(resp)
+			fmt.Print(resp )
 		} else {
 			out = resp
 		}
+		fmt.Printf("\n")
 	}
 
 	if flagArgs.Compare != "" {
@@ -273,7 +275,7 @@ func main() {
 		cmd := exec.Command("grep", "-Fxvf", f1, f2)
 		stdout, _ := cmd.Output()
 
-		fmt.Println(string(stdout))
+		fmt.Print(string(stdout))
 	}
 
 }
