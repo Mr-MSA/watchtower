@@ -173,6 +173,7 @@ watch orch resolution all
 watch orch resolution scope {{scope}}
 watch orch http all
 watch orch http scope {{scope}}
+watch orch targets update
 
 watch put resolution 
 watch put subdomain {{scope name}}
