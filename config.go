@@ -90,10 +90,12 @@ func setMethod(args []string) string {
 		return "PATCH"
 	case "put":
 		return "PATCH"
-	case "delete":
-		return "DELETE"
-	case "create":
-		return "PATCH"
+	case "target":
+		if args[1] == "delete" {
+			return "DELETE"
+		} else if args[1] == "create" {
+			return "PATCH"
+		}
 	}
 
 	return "GET"

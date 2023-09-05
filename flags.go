@@ -184,8 +184,8 @@ watch put subdomain {{scope name}}
 watch put orch resolution
 watch put orch http
 
-watch delete target {{target_name}}
-watch create target
+watch target delete {{target_name}}
+watch target create
 
 (use -body-file body.txt to set body)
 `)

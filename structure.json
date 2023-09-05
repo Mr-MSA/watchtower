@@ -1,7 +1,4 @@
 {
-  "delete": {
-    "target": "{{base}}/targets/{{arg}}"
-  },
   "get": {
     "technologies": {
       "list": "{{base}}/technologies"
@@ -98,8 +95,9 @@
       "http": "{{base}}/orchestration/targets/http/results/{{arg}}"
     }
   },
-  "create": {
-    "target": "{{base}}/targets"
+  "target":{
+    "create":"{{base}}/targets",
+    "delete": "{{base}}/targets/{{arg}}"
   },
   "orch": {
     "targets":{

@@ -1,0 +1,24 @@
+#compdef watch
+
+local -a main
+
+main=(
+    'help:Help of flags and commands'
+    'get:Fetch data'
+    'orch:Orchestration section'
+    'regexp:Regexp section'
+    'put:Requests with PUT method'
+    'target:Delete/Create a target'
+    'init:Init watch environment files'
+    'update:Update watch'
+)
+
+_arguments -C \
+    '1:main:->main' 
+
+case $state in
+    (main)
+        _describe 'main' main
+        ;;
+esac
+
