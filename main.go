@@ -177,12 +177,14 @@ func main() {
 	}
 	if flagArgs.NoLimit {
 		api = fmt.Sprintf("%s&no_limit=true", api)
+		flagArgs.Loop = false
 	}
 	if flagArgs.Total {
 		api = fmt.Sprintf("%s&total=true", api)
 	}
 	if flagArgs.JSON {
 		api = fmt.Sprintf("%s&json=true", api)
+		flagArgs.Loop = false
 	}
 	if flagArgs.Provider != "" {
 		api = fmt.Sprintf("%s&provider=%s", api, flagArgs.Provider)
@@ -238,7 +240,7 @@ func main() {
 		// send http request to api endpoint
 		resp := MakeHttpRequest(api, flagArgs, body)
 		if flagArgs.Compare == "" {
-			fmt.Print(resp )
+			fmt.Print(resp)
 		} else {
 			out = resp
 		}
