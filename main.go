@@ -32,7 +32,6 @@ func main() {
 
 	// rand string
 	var ver = String(10)
-	fmt.Println(ver)
 
 	// init
 	if args[0] == "version" {
