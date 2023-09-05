@@ -102,6 +102,9 @@
     "target": "{{base}}/targets"
   },
   "orch": {
+    "targets":{
+      "update":"{{base}}/orchestration/tasks/active"
+    },
     "resolution": {
       "scope": "{{base}}/orchestration/targets/name-resolution?scope={{arg}}",
       "all": "{{base}}/orchestration/targets/name-resolution"
