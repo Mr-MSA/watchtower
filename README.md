@@ -4,7 +4,7 @@ Go client for watch
 ## Installation
 ### Go install
 ```
-go install github.com/Mr-MSA/watch@latest
+GOBIN=/usr/local/bin go install github.com/Mr-MSA/watch@main
 watch init
 ```
 + set watch addres in ~/.watch-client/.env
