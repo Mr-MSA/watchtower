@@ -29,7 +29,9 @@ func main() {
 
 	// get arguments
 	args := dropFlags(os.Args[1:])
-	var ver = RandStringBytes(20)
+
+	// rand string
+	var ver = String(10)
 	fmt.Println(ver)
 
 	// init
@@ -53,7 +55,7 @@ func main() {
 			fmt.Println(err)
 			os.Exit(0)
 		}
-	}else if args[0] == "update" { 
+	} else if args[0] == "update" {
 		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json?"+ver); err != nil {
 			fmt.Println(err)
 		}

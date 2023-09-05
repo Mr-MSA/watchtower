@@ -9,12 +9,12 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 )
 
-const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
+const charset = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 func ReadJSON(filename string) map[string]interface{} {
 
@@ -98,11 +98,16 @@ func setMethod(args []string) string {
 
 	return "GET"
 }
+func StringWithCharset(length int, charset string) string {
+	var seededRand *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 
-func RandStringBytes(n int) string {
-    b := make([]byte, n)
-    for i := range b {
-        b[i] = letterBytes[rand.Intn(len(letterBytes))]
-    }
-    return string(b)
+	b := make([]byte, length)
+	for i := range b {
+		b[i] = charset[seededRand.Intn(len(charset))]
+	}
+	return string(b)
+}
+
+func String(length int) string {
+	return StringWithCharset(length, charset)
 }

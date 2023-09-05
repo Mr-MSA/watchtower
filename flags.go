@@ -19,8 +19,8 @@ type intelArgs struct {
 	NoLimit         bool
 	ReverseCompare  bool
 	ExcludeScope    string
-	Status 			string
-	Title 			string
+	Status          string
+	Title           string
 	ExcludeDomain   string
 	ExcludeProvider string
 	Provider        string
