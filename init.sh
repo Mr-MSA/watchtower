@@ -8,5 +8,3 @@ cp structure.json ~/.watch-client
 sudo mv watch /usr/local/bin
 
 echo "Execute 'watch help'"
-
-
