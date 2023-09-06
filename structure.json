@@ -4,7 +4,11 @@
       "list": "{{base}}/technologies"
     },
     "targets": {
-      "list": "{{base}}/targets"
+      "list": "{{base}}/targets",
+      "public": {
+          "platform": "{{base}}/public-targets/{{arg}}/history",
+          "all": "{{base}}/public-targets"
+      }
     },
     "single": {
       "subdomain": "{{base}}/subdomains/details/{{arg}}",
@@ -62,12 +66,6 @@
       }
     },
     "result": "{{base}}/test?{{arg}}",
-    "public": {
-      "targets": {
-        "platform": "{{base}}/public-targets/{{arg}}/history",
-        "all": "{{base}}/public-targets"
-      }
-    },
     "orch": {
       "tasks": {
         "active": "{{base}}/orchestration/tasks/active",
