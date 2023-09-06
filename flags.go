@@ -114,11 +114,12 @@ func showHelp(args []string, config map[string]interface{}) {
    --exclude-scope string (exclude a scope from results)
 `)
 	} else {
-		fmt.Printf(`watch help
-watch help flags
+		fmt.Printf(`watch help flags
 watch help version
+
 watch init
 watch init autocomplete
+
 watch update
 
 watch get single target {{target_name}}
@@ -147,8 +148,8 @@ watch get latest lives scope {{scope}}
 watch get latest lives all
 
 watch get targets list
-watch get public targets all
-watch get public targets platform {{platform}}
+watch get targets public all
+watch get targets public platform {{platform}}
 
 watch get fresh subdomains all 
 watch get fresh subdomains scope {{scope}} 
@@ -181,7 +182,7 @@ watch orch http scope {{scope}}
 watch orch targets update
 
 watch put resolution 
-watch put subdomain {{scope name}}
+watch put subdomain {{scope}}
 watch put orch resolution
 watch put orch http
 
