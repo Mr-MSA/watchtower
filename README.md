@@ -6,6 +6,7 @@ Go client for watch
 ```
 GOBIN=/usr/local/bin go install github.com/Mr-MSA/watch@main
 watch init
+watch init autocompelete
 ```
 + set watch addres in ~/.watch-client/.env
 
@@ -15,4 +16,5 @@ git clone https://github.com/Mr-MSA/watch
 cd Watch-Client
 go build .
 ./init.sh
+watch init autocompelete
 ```
