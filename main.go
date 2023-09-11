@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-const version = "1.0.3"
+const version = "1.0.4"
 
 func main() {
 
@@ -43,13 +43,8 @@ func main() {
 		}
 
 		if len(args) == 2 && args[1] == "autocomplete" {
-			if _, err := os.Stat(homedir + "/.watch-client/completions/"); os.IsNotExist(err) {
-				if err := os.Mkdir(homedir+"/.watch-client/completions", os.ModePerm); err != nil {
-					log.Fatal(err)
-				}
-			}
 
-			if err := downloadFile(homedir+"/.watch-client/completions/_watch", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/_watch?"+ver); err != nil {
+			if err := downloadFile(homedir+"/.watch-client/_watch", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/_watch?"+ver); err != nil {
 				fmt.Println(err)
 			}
 			if err := downloadFile(homedir+"/.watch-client/init-autocomplete.sh", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/init-autocomplete.sh?"+ver); err != nil {

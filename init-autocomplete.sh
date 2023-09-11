@@ -1,4 +1,4 @@
-echo 'fpath=(~/.watch-client/completions $fpath)' >> ~/.zshrc
+echo 'fpath=(~/.watch-client/ $fpath)' >> ~/.zshrc
 echo 'autoload -Uz compinit' >> ~/.zshrc
 echo 'compinit' >> ~/.zshrc
 zsh
