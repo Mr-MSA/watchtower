@@ -1,20 +1,20 @@
-# Watch-Client
-Go client for watch
+# Watchtower
+Go client for watchtower
 
 ## Installation
 ### Go install
 ```
-GOBIN=/usr/local/bin go install github.com/Mr-MSA/watch@main
-watch init
-watch init autocompelete
+GOBIN=/usr/local/bin go install github.com/Mr-MSA/watchtower@main
+watchtower init
+watchtower init autocompelete
 ```
-+ set watch addres in ~/.watch-client/.env
++ set watchtower address in ~/.watch-client/.env
 
 ### Manual:
 ```
-git clone https://github.com/Mr-MSA/watch
-cd Watch-Client
+git clone https://github.com/Mr-MSA/watchtower
+cd watchtower
 go build .
 ./init.sh
-watch init autocompelete
+watchtower init autocompelete
 ```

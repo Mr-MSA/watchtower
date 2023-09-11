@@ -114,80 +114,80 @@ func showHelp(args []string, config map[string]interface{}) {
    --exclude-scope string (exclude a scope from results)
 `)
 	} else {
-		fmt.Printf(`watch help flags
-watch help version
+		fmt.Printf(`watchtower help flags
+watchtower help version
 
-watch init
-watch init autocomplete
+watchtower init
+watchtower init autocomplete
 
-watch update
+watchtower update
 
-watch get single target {{target_name}}
-watch get single subdomain {{subdomain}}
-watch get single live {{domain}}
-watch get single http {{subdomain}}
+watchtower get single target {{target_name}}
+watchtower get single subdomain {{subdomain}}
+watchtower get single live {{domain}}
+watchtower get single http {{subdomain}}
 
-watch get subdomains domain {{domain}}
-watch get subdomains scope {{scope}}
-watch get subdomains all
+watchtower get subdomains domain {{domain}}
+watchtower get subdomains scope {{scope}}
+watchtower get subdomains all
 
-watch get lives scope {{scope}}
-watch get lives domain {{domain}}
-watch get lives all
+watchtower get lives scope {{scope}}
+watchtower get lives domain {{domain}}
+watchtower get lives all
 
-watch get http scope {{scope}}
-watch get http domain {{domain}}
-watch get http all
+watchtower get http scope {{scope}}
+watchtower get http domain {{domain}}
+watchtower get http all
 
-watch get latest subdomains domain {{domain}}
-watch get latest subdomains scope {{scope}}
-watch get latest subdomains all
+watchtower get latest subdomains domain {{domain}}
+watchtower get latest subdomains scope {{scope}}
+watchtower get latest subdomains all
 
-watch get latest lives domain {{domain}}
-watch get latest lives scope {{scope}}
-watch get latest lives all
+watchtower get latest lives domain {{domain}}
+watchtower get latest lives scope {{scope}}
+watchtower get latest lives all
 
-watch get targets list
-watch get targets public all
-watch get targets public platform {{platform}}
+watchtower get targets list
+watchtower get targets public all
+watchtower get targets public platform {{platform}}
 
-watch get fresh subdomains all 
-watch get fresh subdomains scope {{scope}} 
-watch get fresh subdomains domain {{domain}} 
+watchtower get fresh subdomains all 
+watchtower get fresh subdomains scope {{scope}} 
+watchtower get fresh subdomains domain {{domain}} 
 
-watch get fresh lives all 
-watch get fresh lives scope {{scope}} 
-watch get fresh lives domain {{domain}} 
+watchtower get fresh lives all 
+watchtower get fresh lives scope {{scope}} 
+watchtower get fresh lives domain {{domain}} 
 
-watch get fresh http all 
-watch get fresh http scope {{scope}} 
-watch get fresh http domain {{domain}} 
+watchtower get fresh http all 
+watchtower get fresh http scope {{scope}} 
+watchtower get fresh http domain {{domain}} 
 
-watch get statistics sqs
-watch get technologies list
+watchtower get statistics sqs
+watchtower get technologies list
 
-watch regexp list
-watch regexp apply -body-file body.txt
-watch regexp test scope {{scope}} -body-file body.txt
-watch regexp test all  -body-file body.txt
+watchtower regexp list
+watchtower regexp apply -body-file body.txt
+watchtower regexp test scope {{scope}} -body-file body.txt
+watchtower regexp test all  -body-file body.txt
 
-watch orch clean database scope {{scope}}
-watch orch clean database all 
-watch orch passive enum all 
-watch orch passive enum scope {{scope}}
-watch orch resolution all
-watch orch resolution scope {{scope}}
-watch orch http all
-watch orch http scope {{scope}}
-watch orch targets update
+watchtower orch clean database scope {{scope}}
+watchtower orch clean database all 
+watchtower orch passive enum all 
+watchtower orch passive enum scope {{scope}}
+watchtower orch resolution all
+watchtower orch resolution scope {{scope}}
+watchtower orch http all
+watchtower orch http scope {{scope}}
+watchtower orch targets update
 
-watch put resolution 
-watch put subdomain {{scope}}
-watch put orch resolution
-watch put orch http
+watchtower put resolution 
+watchtower put subdomain {{scope}}
+watchtower put orch resolution
+watchtower put orch http
 
-watch target delete {{target_name}}
-watch target create
+watchtower target delete {{target_name}}
+watchtower target create
 
 (use -body-file body.txt to set body)
 `)

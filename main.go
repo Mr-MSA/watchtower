@@ -23,7 +23,7 @@ func main() {
 
 	// validate args
 	if len(os.Args[1:]) == 0 {
-		fmt.Println("Execute: watch help")
+		fmt.Println("Execute: watchtower help")
 		os.Exit(0)
 	}
 
@@ -44,10 +44,10 @@ func main() {
 
 		if len(args) == 2 && args[1] == "autocomplete" {
 
-			if err := downloadFile(homedir+"/.watch-client/_watch", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/_watch?"+ver); err != nil {
+			if err := downloadFile(homedir+"/.watch-client/_watchtower", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/_watchtower?"+ver); err != nil {
 				fmt.Println(err)
 			}
-			if err := downloadFile(homedir+"/.watch-client/init-autocomplete.sh", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/init-autocomplete.sh?"+ver); err != nil {
+			if err := downloadFile(homedir+"/.watch-client/init-autocomplete.sh", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/init-autocomplete.sh?"+ver); err != nil {
 				fmt.Println(err)
 			}
 			cmd := exec.Command("zsh", homedir+"/.watch-client/init-autocomplete.sh")
@@ -57,18 +57,18 @@ func main() {
 			}
 		} else if len(args) == 1 {
 
-			if err := downloadFile(homedir+"/.watch-client/.env", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/.env"); err != nil {
+			if err := downloadFile(homedir+"/.watch-client/.env", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/.env"); err != nil {
 				fmt.Println(err)
 			}
 
-			if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json?"+ver); err != nil {
+			if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/structure.json?"+ver); err != nil {
 				fmt.Println(err)
 			}
 		}
 		os.Exit(0)
 
 	} else if args[0] == "update" {
-		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/Watch/main/structure.json?"+ver); err != nil {
+		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/structure.json?"+ver); err != nil {
 			fmt.Println(err)
 		}
 		fmt.Println("structure.json updated!")
@@ -76,14 +76,14 @@ func main() {
 	} else {
 		// check if config dir exists
 		if _, err := os.Stat(homedir + "/.watch-client"); os.IsNotExist(err) {
-			fmt.Println("Path " + homedir + "/.watch-client not found! please execute 'watch init' ")
+			fmt.Println("Path " + homedir + "/.watch-client not found! please execute 'watchtower init' ")
 			os.Exit(0)
 		}
 	}
 
 	// validate baseurl
 	if envVariable("baseURL") == "WATCH_SERVER" {
-		fmt.Println("Please set watch server address at " + homedir + "/.watch-client/.env")
+		fmt.Println("Please set watchtower server address at " + homedir + "/.watch-client/.env")
 		os.Exit(0)
 	}
 

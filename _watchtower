@@ -1,4 +1,4 @@
-#compdef watch
+#compdef watchtower
 
 local -a main_funcs first second third forth
 
@@ -16,8 +16,8 @@ main_funcs=(
     'regexp:Regexp section'
     'put:Requests with PUT method'
     'target:Delete/Create a target'
-    'init:Init watch environment files'
-    'update:Update watch'
+    'init:Init watchtower environment files'
+    'update:Update watchtower'
 )
 
 # first
