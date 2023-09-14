@@ -147,6 +147,10 @@ watchtower get latest lives domain {{domain}}
 watchtower get latest lives scope {{scope}}
 watchtower get latest lives all
 
+watchtower get latest http domain {{domain}}
+watchtower get latest http scope {{scope}}
+watchtower get latest http all
+
 watchtower get targets list
 watchtower get targets public all
 watchtower get targets public platform {{platform}}

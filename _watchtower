@@ -89,6 +89,7 @@ http=(
 latest=(
     'subdomains:Get latest subdomains'
     'lives:Get latest live subdomains'
+    'http:Get latest http subdomains'
 )
 targets=(
     'list:Get list of targets'
@@ -139,6 +140,11 @@ latestSubdomains=(
     'all:Get list of all latest subdomains'
     'scope:Get list of latest subdomains by scope'
     'domain:Get list of latest subdomains by domain'
+)
+latestHttp=(
+    'all:Get list of all latest http subdomains'
+    'scope:Get list of latest http subdomains by scope'
+    'domain:Get list of latest http subdomains by domain'
 )
 freshHttp=(
     'all:Get list of all fresh http services'

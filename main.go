@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-const version = "1.0.4"
+const version = "1.0.5"
 
 func main() {
 
@@ -71,7 +71,10 @@ func main() {
 		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/structure.json?"+ver); err != nil {
 			fmt.Println(err)
 		}
-		fmt.Println("structure.json updated!")
+		if err := downloadFile(homedir+"/.watch-client/_watchtower", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/_watchtower?"+ver); err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println("'structure.json' and '_watchtower' updated!")
 		os.Exit(0)
 	} else {
 		// check if config dir exists
