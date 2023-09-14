@@ -296,6 +296,9 @@ case $state in
                     (subdomains)
                         _describe "latestSubdomains" latestSubdomains
                     ;;
+                    (http) 
+                        _describe "latestHttp" latestHttp
+                    ;;
                 esac
             ;;
             (fresh)
