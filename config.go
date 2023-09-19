@@ -57,6 +57,7 @@ func downloadFile(filepath string, fileurl string) (err error) {
 	}
 	client := http.Client{
 		CheckRedirect: func(r *http.Request, via []*http.Request) error {
+			r.Header.Set("Authorization", String(10))
 			r.URL.Opaque = r.URL.Path
 			return nil
 		},

@@ -30,9 +30,6 @@ func main() {
 	// get arguments
 	args := dropFlags(os.Args[1:])
 
-	// rand string
-	var ver = String(10)
-
 	// init
 
 	if args[0] == "init" {
@@ -44,10 +41,10 @@ func main() {
 
 		if len(args) == 2 && args[1] == "autocomplete" {
 
-			if err := downloadFile(homedir+"/.watch-client/_watchtower", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/_watchtower?"+ver); err != nil {
+			if err := downloadFile(homedir+"/.watch-client/_watchtower", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/_watchtower"); err != nil {
 				fmt.Println(err)
 			}
-			if err := downloadFile(homedir+"/.watch-client/init-autocomplete.sh", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/init-autocomplete.sh?"+ver); err != nil {
+			if err := downloadFile(homedir+"/.watch-client/init-autocomplete.sh", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/init-autocomplete.sh"); err != nil {
 				fmt.Println(err)
 			}
 			cmd := exec.Command("zsh", homedir+"/.watch-client/init-autocomplete.sh")
@@ -61,17 +58,17 @@ func main() {
 				fmt.Println(err)
 			}
 
-			if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/structure.json?"+ver); err != nil {
+			if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/structure.json"); err != nil {
 				fmt.Println(err)
 			}
 		}
 		os.Exit(0)
 
 	} else if args[0] == "update" {
-		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/structure.json?"+ver); err != nil {
+		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/structure.json"); err != nil {
 			fmt.Println(err)
 		}
-		if err := downloadFile(homedir+"/.watch-client/_watchtower", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/_watchtower?"+ver); err != nil {
+		if err := downloadFile(homedir+"/.watch-client/_watchtower", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/_watchtower"); err != nil {
 			fmt.Println(err)
 		}
 		fmt.Println("'structure.json' and '_watchtower' updated!")
