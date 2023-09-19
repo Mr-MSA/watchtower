@@ -55,7 +55,7 @@
         "scope": "{{base}}/subdomains?scope={{arg}}&fresh=true"
       },
       "lives": {
-        "all": "{{base}}/subdomains/live?latest=true",
+        "all": "{{base}}/subdomains/live?fresh=true",
         "domain": "{{base}}/subdomains/live?domain={{arg}}&fresh=true",
         "scope": "{{base}}/subdomains/live?scope={{arg}}&fresh=true"
       },
