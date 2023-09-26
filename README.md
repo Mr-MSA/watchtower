@@ -8,7 +8,7 @@ go install github.com/Mr-MSA/watchtower@main
 watchtower init
 watchtower init autocompelete
 ```
-+ set watchtower address in `~/.watch-client/.env`
++ set watchtower address with scheme in `~/.watch-client/.env`
 
 ### Manual:
 ```
