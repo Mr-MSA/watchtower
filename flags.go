@@ -29,6 +29,11 @@ type intelArgs struct {
 	Compare         string
 	Body            string
 	BodyFile        string
+	ContentType		string
+	ContentLength	string
+	ResponseHeaders	string
+	Technologies	string
+	Watch			string
 }
 
 func dropFlags(args []string) []string {

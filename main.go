@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-const version = "1.0.6"
+const version = "1.0.7"
 
 func main() {
 
@@ -220,6 +220,22 @@ func main() {
 	if flagArgs.ExcludeProvider != "" {
 		api = fmt.Sprintf("%s&exclude_provider=%s", api, flagArgs.ExcludeProvider)
 	}
+	if flagArgs.ContentType != "" {
+		api = fmt.Sprintf("%s&content_type=%s", api, flagArgs.ContentType)
+	}
+	if flagArgs.ContentLength != "" {
+		api = fmt.Sprintf("%s&content_length=%s", api, flagArgs.ContentLength)
+	}
+	if flagArgs.ResponseHeaders != "" {
+		api = fmt.Sprintf("%s&response_headers=%s", api, flagArgs.ResponseHeaders)
+	}
+	if flagArgs.Technologies != "" {
+		api = fmt.Sprintf("%s&technologies=%s", api, flagArgs.Technologies)
+	}
+	if flagArgs.Watch != "" {
+		api = fmt.Sprintf("%s&watch=%s", api, flagArgs.Watch)
+	}
+	
 
 	// limit res
 	if flagArgs.Limit {
@@ -259,8 +275,7 @@ func main() {
 	}
 
 	if flagArgs.Compare != "" {
-
-		f, err := os.Create(".tmp")
+		f, err := os.Create("tmp")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -272,12 +287,12 @@ func main() {
 		f.Close()
 
 		var f1, f2 string
-		f1 = ".tmp"
+		f1 = "tmp"
 		f2 = flagArgs.Compare
 
 		if flagArgs.ReverseCompare {
 			f1 = flagArgs.Compare
-			f2 = ".tmp"
+			f2 = "tmp"
 		}
 
 		if _, err := os.Stat(flagArgs.Compare); err != nil {
@@ -285,7 +300,7 @@ func main() {
 			return
 		}
 
-		cmd := exec.Command("grep", "-Fxvf", f1, f2)
+		cmd := exec.Command("comm","-23",f1,f2)
 		stdout, _ := cmd.Output()
 
 		fmt.Print(string(stdout))
