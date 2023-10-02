@@ -246,7 +246,6 @@ func main() {
 
 			}
 		}
-		fmt.Printf("\n")
 
 	} else {
 
@@ -257,7 +256,6 @@ func main() {
 		} else {
 			out = resp
 		}
-		fmt.Printf("\n")
 	}
 
 	if flagArgs.Compare != "" {
