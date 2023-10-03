@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-const version = "1.0.7"
+const version = "1.0.8"
 
 func main() {
 
@@ -235,7 +235,6 @@ func main() {
 	if flagArgs.Watch != "" {
 		api = fmt.Sprintf("%s&watch=%s", api, flagArgs.Watch)
 	}
-	
 
 	// limit res
 	if flagArgs.Limit {
@@ -256,10 +255,19 @@ func main() {
 			resp := MakeHttpRequest(api+"&limit=1000&page="+strconv.Itoa(i), flagArgs, body)
 
 			if flagArgs.Compare == "" {
-				fmt.Print(resp)
-			} else {
-				out += resp
+				if i == (count/1000)+1 {
+					fmt.Print(resp)
+				} else {
+					fmt.Print(resp + "\n")
+				}
 
+			} else {
+
+				if i == (count/1000)+1 {
+					out += resp
+				} else {
+					out += resp + "\n"
+				}
 			}
 		}
 
@@ -275,7 +283,7 @@ func main() {
 	}
 
 	if flagArgs.Compare != "" {
-		f, err := os.Create("tmp")
+		f, err := os.Create("/tmp/watchtower_client_1")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -287,12 +295,12 @@ func main() {
 		f.Close()
 
 		var f1, f2 string
-		f1 = "tmp"
-		f2 = flagArgs.Compare
+		f1 = flagArgs.Compare
+		f2 = "/tmp/watchtower_client_1"
 
 		if flagArgs.ReverseCompare {
-			f1 = flagArgs.Compare
-			f2 = "tmp"
+			f1 = "/tmp/watchtower_client_1"
+			f2 = flagArgs.Compare
 		}
 
 		if _, err := os.Stat(flagArgs.Compare); err != nil {
@@ -300,7 +308,7 @@ func main() {
 			return
 		}
 
-		cmd := exec.Command("comm","-23",f1,f2)
+		cmd := exec.Command("bash", "-c", "comm -23 <(cat "+f1+"|sort -u) <(cat "+f2+"|sort -u)")
 		stdout, _ := cmd.Output()
 
 		fmt.Print(string(stdout))

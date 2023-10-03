@@ -112,7 +112,13 @@ test=(
     'all:Test all regexes'
 )
 
-clean=('database:Clean database')
+clean=(
+    'database:Clean database'
+    'tags:Clean tags'
+    'ips:Clean ips'
+    'domains:Clean domains'
+)
+
 passive=('enum:Passive enumeration')
 
 resolution=(
@@ -164,6 +170,18 @@ freshSubdomains=(
 database=( 
     'scope:Clean database by scope'
     'all:Clean database for all scopes'
+)
+tags=( 
+    'scope:Clean tags by scope'
+    'all:Clean tags for all scopes'
+)
+ips=( 
+    'scope:Clean ips by scope'
+    'all:Clean ips for all scopes'
+)
+domains=( 
+    'scope:Clean domains by scope'
+    'all:Clean domains for all scopes'
 )
 enum=(
     'all:Run passive enumeration on all'
@@ -339,6 +357,15 @@ case $state in
                     ;;
                     (database)
                         _describe "database" database
+                    ;;
+                    (ips)
+                        _describe "ips" ips
+                    ;;
+                    (domains)
+                        _describe "domains" domains
+                    ;;
+                    (tags)
+                        _describe "tags" tags
                     ;;
                     (enum)
                         _describe "enum" enum

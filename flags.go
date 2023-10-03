@@ -29,11 +29,11 @@ type intelArgs struct {
 	Compare         string
 	Body            string
 	BodyFile        string
-	ContentType		string
-	ContentLength	string
-	ResponseHeaders	string
-	Technologies	string
-	Watch			string
+	ContentType     string
+	ContentLength   string
+	ResponseHeaders string
+	Technologies    string
+	Watch           string
 }
 
 func dropFlags(args []string) []string {
@@ -182,6 +182,12 @@ watchtower regexp test all  -body-file body.txt
 
 watchtower orch clean database scope {{scope}}
 watchtower orch clean database all 
+watchtower orch clean tags scope {{scope}}
+watchtower orch clean tags all
+watchtower orch clean ips scope {{scope}}
+watchtower orch clean ips all
+watchtower orch clean domains scope {{scope}}
+watchtower orch clean domains all
 watchtower orch passive enum all 
 watchtower orch passive enum scope {{scope}}
 watchtower orch resolution all
