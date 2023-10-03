@@ -128,10 +128,9 @@
       }
     },
     "passive": {
-        "enum": {
-          "all": "{{base}}/orchestration/subdomain-enumeration/passive",
-          "scope": "{{base}}/orchestration/subdomain-enumeration/passive/?scope={{arg}}"
-        }
+      "enum": {
+        "all": "{{base}}/orchestration/subdomain-enumeration/passive",
+        "scope": "{{base}}/orchestration/subdomain-enumeration/passive/?scope={{arg}}"
       }
     }
   }
