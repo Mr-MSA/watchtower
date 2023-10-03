@@ -114,7 +114,20 @@
         "all": "{{base}}/orchestration/targets/clean",
         "scope": "{{base}}/orchestration/targets/clean?scope={{arg}}"
       },
-      "passive": {
+      "tags": {
+        "all": "{{base}}/orchestration/clean/tags",
+        "scope": "{{base}}/orchestration/clean/tags?scope={{arg}}"
+      },
+      "ips": {
+        "all": "{{base}}/orchestration/clean/ips",
+        "scope": "{{base}}/orchestration/clean/ips?scope={{arg}}"
+      },
+      "domains": {
+        "all": "{{base}}/orchestration/clean/domains",
+        "scope": "{{base}}/orchestration/clean/domains?scope={{arg}}"
+      }
+    },
+    "passive": {
         "enum": {
           "all": "{{base}}/orchestration/subdomain-enumeration/passive",
           "scope": "{{base}}/orchestration/subdomain-enumeration/passive/?scope={{arg}}"
