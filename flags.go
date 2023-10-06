@@ -58,6 +58,11 @@ func dropFlags(args []string) []string {
 
 func defineIntelArgumentFlags(intelFlags *flag.FlagSet, args *intelArgs) {
 
+	intelFlags.StringVar(&args.ContentType, "content-type", "", "set content-type")
+	intelFlags.StringVar(&args.ContentLength, "content-length", "", "set content-length")
+	intelFlags.StringVar(&args.ResponseHeaders, "response-headers", "", "")
+	intelFlags.StringVar(&args.Technologies, "techs", "", "")
+	intelFlags.StringVar(&args.Watch, "watch", "", "")
 	intelFlags.StringVar(&args.Provider, "provider", "", "set providers")
 	intelFlags.StringVar(&args.Status, "status", "", "match status")
 	intelFlags.StringVar(&args.Title, "title", "", "match title")
