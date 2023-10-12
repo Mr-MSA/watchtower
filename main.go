@@ -220,20 +220,11 @@ func main() {
 	if flagArgs.ExcludeProvider != "" {
 		api = fmt.Sprintf("%s&exclude_provider=%s", api, flagArgs.ExcludeProvider)
 	}
-	if flagArgs.ContentType != "" {
-		api = fmt.Sprintf("%s&content_type=%s", api, flagArgs.ContentType)
+	if flagArgs.Tag != "" {
+		api = fmt.Sprintf("%s&tag=%s", api, flagArgs.Tag)
 	}
-	if flagArgs.ContentLength != "" {
-		api = fmt.Sprintf("%s&content_length=%s", api, flagArgs.ContentLength)
-	}
-	if flagArgs.ResponseHeaders != "" {
-		api = fmt.Sprintf("%s&response_headers=%s", api, flagArgs.ResponseHeaders)
-	}
-	if flagArgs.Technologies != "" {
-		api = fmt.Sprintf("%s&technologies=%s", api, flagArgs.Technologies)
-	}
-	if flagArgs.Watch != "" {
-		api = fmt.Sprintf("%s&watch=%s", api, flagArgs.Watch)
+	if flagArgs.Technology != "" {
+		api = fmt.Sprintf("%s&technology=%s", api, flagArgs.Technology)
 	}
 
 	// limit res
