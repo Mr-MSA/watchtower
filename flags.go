@@ -114,6 +114,7 @@ func showHelp(args []string, config map[string]interface{}) {
    --provider string (filter by providers)
    --status string (filter by status)
    --title string (filter by title)
+   --tech (filter by technology)
 		
    --exclude-domain string (exclude a domain from results)
    --exclude-provider string (exclude a provider from results)
