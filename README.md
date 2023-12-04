@@ -26,7 +26,7 @@ watchtower help flags
 
 ### Update Watch
 ```
-go install github.com/Mr-MSA/watchtower@main
+go install github.com/Mr-MSA/watchtower@v1.1.0
 watchtower update 
 ```
 
