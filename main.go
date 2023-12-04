@@ -238,7 +238,8 @@ func main() {
 		// get count of results
 		count, err := strconv.Atoi(MakeHttpRequest(api+"&count=true", flagArgs, body))
 		if err != nil {
-			fmt.Println("Can't convert string to integer")
+			fmt.Println("Can't make a request (to get counts)")
+			os.Exit(0)
 		}
 
 		// get results

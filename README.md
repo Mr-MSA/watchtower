@@ -42,6 +42,8 @@ fpath=(~/.watch-client/ $fpath)
 autoload -Uz compinit
 compinit
 ```
+### Configuration
++ Set Username and Password in `~/watch-client/.env`
 
 ### Flags
 ```
