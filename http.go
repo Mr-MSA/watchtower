@@ -4,7 +4,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"fmt"
 	"encoding/base64"
 	"strings"
 )
