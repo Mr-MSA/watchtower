@@ -19,6 +19,7 @@ type intelArgs struct {
 	NoLimit         bool
 	ReverseCompare  bool
 	Tag             string
+	PublicTarget    string
 	ExcludeScope    string
 	Status          string
 	Title           string
@@ -68,6 +69,7 @@ func defineIntelArgumentFlags(intelFlags *flag.FlagSet, args *intelArgs) {
 	intelFlags.StringVar(&args.ExcludeDomain, "exclude-domain", "", "exclude domain from result")
 	intelFlags.StringVar(&args.Method, "method", "", "http request method")
 	intelFlags.StringVar(&args.Body, "body", "", "request body")
+	intelFlags.StringVar(&args.PublicTarget, "public-target", "", "add public target by name")
 	intelFlags.StringVar(&args.BodyFile, "body-file", "", "request body file")
 	intelFlags.StringVar(&args.Compare, "compare", "", "compare response")
 	intelFlags.BoolVar(&args.ReverseCompare, "rc", false, "reverse compare")
@@ -95,6 +97,7 @@ func showHelp(args []string, config map[string]interface{}) {
 		fmt.Printf(`Flags:
    --body "bodystring" (request body)
    --body-file "filename" (request body file name)
+   --public-target "program_name" (add public target by name)
    --method string (http request method)
 		
    --compare "filename" (compare response)

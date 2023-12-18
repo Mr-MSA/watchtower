@@ -160,6 +160,10 @@ func main() {
 		body = string(fileContent)
 	}
 
+	if flagArgs.PublicTarget != "" {
+		body = `{ "name": "` + flagArgs.PublicTarget + `", "dns_brute": { "type": [ "static", "dynamic" ], "interval": 0 }, "eligible_for_bounty": true, "domains": [], "filter": { "firewall": [], "regex": [] }, "flags": [ "cdn", "tech_detect" ], "http_options": { "type": "new", "request_per_second": 10, "ports": [ 443 ], "retry_on_failure": 0, "deny_statuses": [ "400", "5xx" ], "deny_cdn": true }, "name_resolution": { "type": "all", "resolvers": [ "8.8.4.4", "129.250.35.251", "208.67.222.222" ] }, "on_start": { "enumeration": false, "dns_brute": false, "name_resolution": false }, "out_of_scopes": [], "providers": { "enumeration": [ "crtsh", "subfinder", "abuseipdb", "chaos", "dnscrawl", "sourcegraph" ] }, "source": "other" }`
+	}
+
 	// append ?
 	if !strings.Contains(api, "?") {
 		api = api + "?"
