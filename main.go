@@ -99,17 +99,19 @@ func main() {
 
 	// find endpoint
 	var conf map[string]interface{} = config
-	for i := 0; i <= len(args); i++ {
-
+	for i := 0; i <= len(args)-1; i++ {
+		
 		if conf[args[i]] == nil {
 			break
 		}
 
 		if fmt.Sprintf("%T", conf[args[i]]) == "string" {
+
 			api = conf[args[i]].(string)
 			count += i
 			break
 		} else {
+
 			conf = conf[args[i]].(map[string]interface{})
 		}
 	}
@@ -129,6 +131,11 @@ func main() {
 	api = strings.Replace(api, "{{arg}}", args[len(args)-1], -1)
 	api = strings.Replace(api, "{{base}}", envVariable("baseURL"), -1)
 
+	if len(os.Args[1:]) < count{
+		fmt.Println("Command/API not found")
+		os.Exit(0)
+	}
+
 	// parse flags
 	flags := os.Args[1:][count:]
 	var flagArgs intelArgs
@@ -140,6 +147,11 @@ func main() {
 	if err := intelCommand.Parse(flags); err != nil {
 		fmt.Printf("%v\n", err)
 		os.Exit(2)
+	}
+	// help
+	if flagArgs.Help {
+		fmt.Printf("%s", flagHelp)
+		os.Exit(3)
 	}
 
 	// set body

@@ -8,6 +8,36 @@ import (
 	"strings"
 )
 
+var flagHelp = `Flags:
+   --body "bodystring" (request body)
+   --body-file "filename" (request body file name)
+   --public-target "program_name" (add public target by name)
+   --method string (http request method)
+		
+   --compare "filename" (compare response)
+   --rc (reverse compare)
+		  
+   --limit (limit results)
+   --loop (get all pages)
+		
+   --count (show count of results)
+   --json (show output as json)
+   --cdn (add cdn=ture)
+   --help (help of flags)
+   --total (add total=true)
+   --internal (add internal=true)
+   --no-limit (add not_limit=true)
+		
+   --date string (set date of results)
+   --provider string (filter by providers)
+   --status string (filter by status)
+   --title string (filter by title)
+   --tech (filter by technology)
+
+   --exclude-domain string (exclude a domain from results)
+   --exclude-provider string (exclude a provider from results)
+   --exclude-scope string (exclude a scope from results)`
+
 type intelArgs struct {
 	JSON            bool
 	Loop            bool
@@ -15,6 +45,7 @@ type intelArgs struct {
 	CDN             bool
 	Total           bool
 	Limit           bool
+	Help            bool
 	Internal        bool
 	NoLimit         bool
 	ReverseCompare  bool
@@ -57,6 +88,9 @@ func dropFlags(args []string) []string {
 
 func defineIntelArgumentFlags(intelFlags *flag.FlagSet, args *intelArgs) {
 
+	intelFlags.Usage = func() {
+		fmt.Println(flagHelp)
+	}
 	intelFlags.StringVar(&args.ResponseHeaders, "response-headers", "", "")
 	intelFlags.StringVar(&args.Technology, "tech", "", "")
 	intelFlags.StringVar(&args.Tag, "tag", "", "")
@@ -81,6 +115,8 @@ func defineIntelArgumentFlags(intelFlags *flag.FlagSet, args *intelArgs) {
 	intelFlags.BoolVar(&args.Total, "total", false, "add total=true")
 	intelFlags.BoolVar(&args.Loop, "loop", false, "get all pages")
 	intelFlags.BoolVar(&args.Limit, "limit", false, "limit results")
+	intelFlags.BoolVar(&args.Help, "help", false, "help of flags")
+	intelFlags.BoolVar(&args.Help, "h", false, "help of flags")
 
 }
 
@@ -94,35 +130,7 @@ func showHelp(args []string, config map[string]interface{}) {
 		fmt.Println(version)
 		os.Exit(0)
 	} else if len(args) == 2 && args[1] == "flags" {
-		fmt.Printf(`Flags:
-   --body "bodystring" (request body)
-   --body-file "filename" (request body file name)
-   --public-target "program_name" (add public target by name)
-   --method string (http request method)
-		
-   --compare "filename" (compare response)
-   --rc (reverse compare)
-		  
-   --limit (limit results)
-   --loop (get all pages)
-		
-   --count (show count of results)
-   --json (show output as json)
-   --cdn (add cdn=ture)
-   --total (add total=true)
-   --internal (add internal=true)
-   --no-limit (add not_limit=true)
-		
-   --date string (set date of results)
-   --provider string (filter by providers)
-   --status string (filter by status)
-   --title string (filter by title)
-   --tech (filter by technology)
-		
-   --exclude-domain string (exclude a domain from results)
-   --exclude-provider string (exclude a provider from results)
-   --exclude-scope string (exclude a scope from results)
-`)
+		fmt.Printf(flagHelp)
 	} else {
 		fmt.Printf(`watchtower help flags
 watchtower help version
