@@ -90,7 +90,11 @@ func setMethod(args []string) string {
 	case "orch":
 		return "PATCH"
 	case "put":
-		return "PATCH"
+		if args[1] == "push" {
+			return "PUT"
+		} else {
+			return "PATCH"
+		}
 	case "target":
 		if args[1] == "delete" {
 			return "DELETE"
