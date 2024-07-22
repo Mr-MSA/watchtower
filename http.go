@@ -1,10 +1,11 @@
 package main
 
 import (
+	"encoding/base64"
+	"encoding/json"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"encoding/base64"
 	"strings"
 )
 
@@ -16,7 +17,18 @@ func MakeHttpRequest(url string, flags intelArgs, reqbody string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	creds := base64.StdEncoding.EncodeToString([]byte(envVariable("Username")+":"+envVariable("Password")))
+
+	// set content-type
+	if reqbody != "" {
+		if isJSON(reqbody) {
+			req.Header.Set("Content-Type", "application/json")
+		} else {
+			req.Header.Set("Content-Type", "text/plain")
+		}
+	}
+
+	// set credentials
+	creds := base64.StdEncoding.EncodeToString([]byte(envVariable("Username") + ":" + envVariable("Password")))
 	req.Header.Set("Authorization", "basic "+creds)
 
 	resp, err := client.Do(req)
@@ -33,4 +45,10 @@ func MakeHttpRequest(url string, flags intelArgs, reqbody string) string {
 
 	return string(body)
 
+}
+
+func isJSON(s string) bool {
+	var js interface{}
+	err := json.Unmarshal([]byte(s), &js)
+	return err == nil
 }

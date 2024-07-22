@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-const version = "1.1.1"
+const version = "1.1.4"
 
 func main() {
 
@@ -100,7 +100,7 @@ func main() {
 	// find endpoint
 	var conf map[string]interface{} = config
 	for i := 0; i <= len(args)-1; i++ {
-		
+
 		if conf[args[i]] == nil {
 			break
 		}
@@ -131,7 +131,7 @@ func main() {
 	api = strings.Replace(api, "{{arg}}", args[len(args)-1], -1)
 	api = strings.Replace(api, "{{base}}", envVariable("baseURL"), -1)
 
-	if len(os.Args[1:]) < count{
+	if len(os.Args[1:]) < count {
 		fmt.Println("Command/API not found")
 		os.Exit(0)
 	}
