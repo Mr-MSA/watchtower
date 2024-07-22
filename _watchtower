@@ -134,6 +134,7 @@ targetsOrch=('update:Update targets list')
 orchPut=(
     'resolution:Insert name resolution results'
     'http:Insert http results'
+    'subenum:Subdomain enumeration push'
 )
 
 # third
