@@ -55,6 +55,7 @@ orch=(
     'resolution:Run name resolution'
     'http:Run httpx'
     'targets:Update public targets'
+    'push:Push subdomain enumeration'
 )
 put=(
     'resolution:Add name resolution'
@@ -119,6 +120,10 @@ clean=(
     'domains:Clean domains'
 )
 
+push=(
+    'subenum:Subdomain enumeration push'
+)
+
 passive=('enum:Passive enumeration')
 
 resolution=(
@@ -134,7 +139,6 @@ targetsOrch=('update:Update targets list')
 orchPut=(
     'resolution:Insert name resolution results'
     'http:Insert http results'
-    'subenum:Subdomain enumeration push'
 )
 
 # third
@@ -270,6 +274,9 @@ case $state in
             ;;
             (orch)
                 case $words[3] in
+                    (push)
+                        _describe "push" push 
+                    ;;
                     (clean)
                         _describe "clean" clean 
                     ;;
