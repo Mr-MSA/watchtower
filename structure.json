@@ -89,6 +89,7 @@
     "subdomain": "{{base}}/subdomains/{{arg}}",
     "resolution": "{{base}}/orchestration/targets/name-resolution/results",
     "orch": {
+      "subenum":"{{base}}/orchestration/subdomain-enumeration/push",
       "resolution": "{{base}}/orchestration/targets/name-resolution/results",
       "http": "{{base}}/orchestration/targets/http/results/{{arg}}"
     }
