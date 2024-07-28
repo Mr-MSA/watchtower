@@ -62,20 +62,21 @@ compinit
 
 ### Flags
 ```
-Flags:
    --body "bodystring" (request body)
    --body-file "filename" (request body file name)
+   --public-target "program_name" (add public target by name)
    --method string (http request method)
 
    --compare "filename" (compare response)
    --rc (reverse compare)
-
-   --limit (limit results)
+                  
+   --limit (disable default loop)
    --loop (get all pages)
 
    --count (show count of results)
    --json (show output as json)
    --cdn (add cdn=ture)
+   --help (help of flags)
    --total (add total=true)
    --internal (add internal=true)
    --no-limit (add not_limit=true)
@@ -84,6 +85,10 @@ Flags:
    --provider string (filter by providers)
    --status string (filter by status)
    --title string (filter by title)
+   --technology (filter by technology)
+   --response-headers (filter by response header, format: HEADER1:value; HEADER2:value2)
+   --content-type (filter by content-type header)
+   --server (filter by server)
 
    --exclude-domain string (exclude a domain from results)
    --exclude-provider string (exclude a provider from results)
