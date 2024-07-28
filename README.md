@@ -34,6 +34,11 @@ go install github.com/Mr-MSA/watchtower@latest
 watchtower update 
 ```
 
+### Uninstall watchtower
+```
+rm -rf ~/go/bin/watchtower ~/.watch-client ~/.watchtower
+```
+
 ### Active Autocomplete
 Execute following commands:
 ```
