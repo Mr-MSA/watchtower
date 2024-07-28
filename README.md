@@ -36,7 +36,7 @@ watchtower update
 
 ### Uninstall watchtower
 ```
-rm -rf ~/go/bin/watchtower ~/.watch-client ~/.watchtower
+rm -rf ~/go/bin/watchtower ~/.watch-client ~/.watchtower /usr/local/bin/watchtower
 ```
 
 ### Active Autocomplete
