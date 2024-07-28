@@ -8,7 +8,7 @@ go install github.com/Mr-MSA/watchtower@main
 watchtower init
 watchtower init autocompelete
 ```
-+ set watchtower address with scheme in `~/.watch-client/.env`
++ set watchtower address with scheme in `~/.watchtower/.env`
 
 ### Manual:
 ```
@@ -34,11 +34,6 @@ go install github.com/Mr-MSA/watchtower@latest
 watchtower update 
 ```
 
-### Uninstall watchtower
-```
-rm -rf ~/go/bin/watchtower ~/.watch-client ~/.watchtower /usr/local/bin/watchtower
-```
-
 ### Active Autocomplete
 Execute following commands:
 ```
@@ -47,12 +42,12 @@ watchtower init autocomplete
 ```
 Add following commands in zshrc or zsh profile and source file:
 ```
-fpath=(~/.watch-client/ $fpath)
+fpath=(~/.watchtower/ $fpath)
 autoload -Uz compinit
 compinit
 ```
 ### Configuration
-+ Set Username and Password in `~/watch-client/.env`
++ Set Username and Password in `~/watchtower/.env`
 
 ### Flags
 ```
