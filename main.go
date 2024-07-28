@@ -3,99 +3,85 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
-	"os/exec"
-	"strconv"
 	"strings"
 )
 
-const version = "1.1.4"
+const (
+	repository = "https://raw.githubusercontent.com/Mr-MSA/watchtower"
+	version    = "1.2.0"
+	directory  = "/.watchtower"
+)
 
 func main() {
 
-	// get home dir
+	// Read home directoru location
 	homedir, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatal(err)
 	}
+	// Set watchtower local directory path
+	watch_directory := homedir + directory
 
-	// validate args
-	if len(os.Args[1:]) == 0 {
-		fmt.Println("Execute: watchtower help")
+	// Drop flags from arguments
+	args := dropFlags(os.Args[1:])
+	// Check length of args to show help text
+	if len(args) == 0 {
+		fmt.Println("Help of commands: watchtower help")
 		os.Exit(0)
 	}
 
-	// get arguments
-	args := dropFlags(os.Args[1:])
-
-	// init
-
-	if args[0] == "init" {
-		if _, err := os.Stat(homedir + "/.watch-client"); os.IsNotExist(err) {
-			if err := os.Mkdir(homedir+"/.watch-client/", os.ModePerm); err != nil {
-				log.Fatal(err)
-			}
-		}
+	switch args[0] {
+	case "init":
+		createDirectory(watch_directory)
 
 		if len(args) == 2 && args[1] == "autocomplete" {
 
-			if err := downloadFile(homedir+"/.watch-client/_watchtower", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/_watchtower"); err != nil {
-				fmt.Println(err)
-			}
-			if err := downloadFile(homedir+"/.watch-client/init-autocomplete.sh", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/init-autocomplete.sh"); err != nil {
-				fmt.Println(err)
-			}
-			cmd := exec.Command("zsh", homedir+"/.watch-client/init-autocomplete.sh")
-			_, err := cmd.Output()
-			if err != nil {
-				fmt.Println(err)
-			}
-		} else if len(args) == 1 {
+			initAutoComplete(watch_directory)
 
-			if err := downloadFile(homedir+"/.watch-client/.env", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/.env"); err != nil {
-				fmt.Println(err)
-			}
-
-			if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/structure.json"); err != nil {
-				fmt.Println(err)
-			}
-		}
-		os.Exit(0)
-
-	} else if args[0] == "update" {
-		if err := downloadFile(homedir+"/.watch-client/structure.json", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/structure.json"); err != nil {
-			fmt.Println(err)
-		}
-		if err := downloadFile(homedir+"/.watch-client/_watchtower", "https://raw.githubusercontent.com/Mr-MSA/watchtower/main/_watchtower"); err != nil {
-			fmt.Println(err)
-		}
-		fmt.Println("'structure.json' and '_watchtower' updated!")
-		os.Exit(0)
-	} else {
-		// check if config dir exists
-		if _, err := os.Stat(homedir + "/.watch-client"); os.IsNotExist(err) {
-			fmt.Println("Path " + homedir + "/.watch-client not found! please execute 'watchtower init' ")
 			os.Exit(0)
 		}
+
+		initWatchtower(watch_directory)
+
+		os.Exit(0)
+	case "update":
+
+		updateWatchtowerFiles(watch_directory)
+		os.Exit(0)
+	}
+
+	// check config directory exists
+	if _, err := os.Stat(watch_directory); os.IsNotExist(err) {
+		fmt.Println("Directory " + watch_directory + " doesn't exist! please execute 'watchtower init' ")
+		os.Exit(0)
 	}
 
 	// validate baseurl
 	if envVariable("baseURL") == "WATCH_SERVER" {
-		fmt.Println("Please set watchtower server address at " + homedir + "/.watch-client/.env")
+		fmt.Println("Please set watchtower server address at " + watch_directory + "/.env")
 		os.Exit(0)
 	}
 
 	// read and parse configurations
-	config := ReadJSON(homedir + "/.watch-client/structure.json")
+	config := ReadJSON(watch_directory + "/structure.json")
 
 	// show help
-	showHelp(args, config)
+	if args[0] == "help" {
+		showHelp(args)
+	}
 
 	// set variables
 	var api string
 	var count = 1
+	var limit string
+
+	if envVariable("resultsLimit") != "" {
+		limit = envVariable("resultsLimit")
+	} else {
+		limit = "1000"
+	}
 
 	// find endpoint
 	var conf map[string]interface{} = config
@@ -116,38 +102,35 @@ func main() {
 		}
 	}
 
-	// validate api
+	// check the api string
 	if api == "" {
 		fmt.Println("Command/API not found")
 		os.Exit(0)
 	}
 
-	// check has arg
+	// check the command has require input
 	if strings.Contains(api, "{{arg}}") {
 		count++
 	}
-
-	// parse api endpoint
-	api = strings.Replace(api, "{{arg}}", args[len(args)-1], -1)
-	api = strings.Replace(api, "{{base}}", envVariable("baseURL"), -1)
 
 	if len(os.Args[1:]) < count {
 		fmt.Println("Command/API not found")
 		os.Exit(0)
 	}
 
+	// parse api endpoint
+	api = parseAPI(api, args)
+
 	// parse flags
-	flags := os.Args[1:][count:]
 	var flagArgs intelArgs
-
 	intelCommand := flag.NewFlagSet("main", flag.ContinueOnError)
-
 	defineIntelArgumentFlags(intelCommand, &flagArgs)
 
-	if err := intelCommand.Parse(flags); err != nil {
+	if err := intelCommand.Parse(os.Args[1:][count:]); err != nil {
 		fmt.Printf("%v\n", err)
 		os.Exit(2)
 	}
+
 	// help
 	if flagArgs.Help {
 		fmt.Printf("%s", flagHelp)
@@ -155,25 +138,10 @@ func main() {
 	}
 
 	// set body
-	var body string
-	if flagArgs.Body != "" {
-
-		body = flagArgs.Body
-
-	} else if flagArgs.BodyFile != "" {
-
-		// read body file
-		fileContent, err := ioutil.ReadFile(flagArgs.BodyFile)
-		if err != nil {
-			fmt.Printf("Error: %s\n", err)
-			os.Exit(0)
-		}
-
-		body = string(fileContent)
-	}
+	body := readBody(flagArgs)
 
 	if flagArgs.PublicTarget != "" {
-		body = `{ "name": "` + flagArgs.PublicTarget + `", "dns_brute": { "type": [ "static", "dynamic" ], "interval": 0 }, "eligible_for_bounty": true, "domains": [], "filter": { "firewall": [], "regex": [] }, "flags": [ "cdn", "tech_detect" ], "http_options": { "type": "new", "request_per_second": 10, "ports": [ 443 ], "retry_on_failure": 0, "deny_statuses": [ "400", "5xx" ], "deny_cdn": true }, "name_resolution": { "type": "all", "resolvers": [ "8.8.4.4", "129.250.35.251", "208.67.222.222" ] }, "on_start": { "enumeration": false, "dns_brute": false, "name_resolution": false }, "out_of_scopes": [], "providers": { "enumeration": [ "crtsh", "subfinder", "abuseipdb", "chaos", "dnscrawl", "sourcegraph" ] }, "source": "other" }`
+		body = setPublicTargetBody(flagArgs.PublicTarget)
 	}
 
 	// append ?
@@ -186,140 +154,38 @@ func main() {
 		flagArgs.Method = setMethod(args)
 	}
 
-	// set loop
-	if args[0] == "get" {
-		if args[1] == "lives" || args[1] == "fresh" || args[1] == "subdomains" || args[1] == "latest" || args[1] == "http" {
-			flagArgs.Loop = true
-		}
+	// set default loop
+	if defaultLoop(args) {
+		flagArgs.Loop = true
 	}
 
 	// set endpoint by flags
-
-	if flagArgs.Count {
-		api = fmt.Sprintf("%s&count=true", api)
-	}
-	if flagArgs.CDN {
-		api = fmt.Sprintf("%s&cdn=true", api)
-	}
-	if flagArgs.Internal {
-		api = fmt.Sprintf("%s&internal=true", api)
-	}
-	if flagArgs.NoLimit {
-		api = fmt.Sprintf("%s&no_limit=true", api)
-		flagArgs.Loop = false
-	}
-	if flagArgs.Total {
-		api = fmt.Sprintf("%s&total=true", api)
-	}
-	if flagArgs.JSON {
-		api = fmt.Sprintf("%s&json=true", api)
-		flagArgs.Loop = false
-	}
-	if flagArgs.Provider != "" {
-		api = fmt.Sprintf("%s&provider=%s", api, flagArgs.Provider)
-	}
-	if flagArgs.Title != "" {
-		api = fmt.Sprintf("%s&title=%s", api, flagArgs.Title)
-	}
-	if flagArgs.Status != "" {
-		api = fmt.Sprintf("%s&status=%s", api, flagArgs.Status)
-	}
-	if flagArgs.Date != "" {
-		api = fmt.Sprintf("%s&date=%s", api, flagArgs.Date)
-	}
-	if flagArgs.ExcludeDomain != "" {
-		api = fmt.Sprintf("%s&exclude_domain=%s", api, flagArgs.ExcludeDomain)
-	}
-	if flagArgs.ExcludeScope != "" {
-		api = fmt.Sprintf("%s&exclude_scope=%s", api, flagArgs.ExcludeScope)
-	}
-	if flagArgs.ExcludeProvider != "" {
-		api = fmt.Sprintf("%s&exclude_provider=%s", api, flagArgs.ExcludeProvider)
-	}
-	if flagArgs.Tag != "" {
-		api = fmt.Sprintf("%s&tag=%s", api, flagArgs.Tag)
-	}
-	if flagArgs.Technology != "" {
-		api = fmt.Sprintf("%s&technology=%s", api, flagArgs.Technology)
-	}
-
-	// limit res
-	if flagArgs.Limit {
-		flagArgs.Loop = false
-	}
+	api = setAPI(api, flagArgs)
 
 	var out string
-	if flagArgs.Loop && !flagArgs.Count {
+	if flagArgs.Loop && !flagArgs.Count && !flagArgs.NoLimit {
 
-		// get count of results
-		count, err := strconv.Atoi(MakeHttpRequest(api+"&count=true", flagArgs, body))
-		if err != nil {
-			fmt.Println("Can't make a request (to get counts)")
-			os.Exit(0)
-		}
-
-		// get results
-		for i := 0; i <= ((count / 1000) + 1); i++ {
-			resp := MakeHttpRequest(api+"&limit=1000&page="+strconv.Itoa(i), flagArgs, body)
-
-			if flagArgs.Compare == "" {
-				if i == (count/1000)+1 {
-					fmt.Print(resp)
-				} else {
-					fmt.Print(resp + "\n")
-				}
-
-			} else {
-
-				if i == (count/1000)+1 {
-					out += resp
-				} else {
-					out += resp + "\n"
-				}
-			}
-		}
+		out = makeLoop(api, flagArgs, body, limit)
 
 	} else {
 
 		// send http request to api endpoint
 		resp := MakeHttpRequest(api, flagArgs, body)
+
+		// return techs list as json
+		parseTechnologies(resp, args)
+
+		// check if compare enable save response to a variable
 		if flagArgs.Compare == "" {
 			fmt.Print(resp)
 		} else {
 			out = resp
 		}
+
 	}
 
 	if flagArgs.Compare != "" {
-		f, err := os.Create("/tmp/watchtower_client_1")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		_, err2 := f.WriteString(out)
-		if err2 != nil {
-			log.Fatal(err2)
-		}
-		f.Close()
-
-		var f1, f2 string
-		f1 = flagArgs.Compare
-		f2 = "/tmp/watchtower_client_1"
-
-		if flagArgs.ReverseCompare {
-			f1 = "/tmp/watchtower_client_1"
-			f2 = flagArgs.Compare
-		}
-
-		if _, err := os.Stat(flagArgs.Compare); err != nil {
-			fmt.Println("Compare file does not exist!")
-			return
-		}
-
-		cmd := exec.Command("bash", "-c", "comm -23 <(cat "+f1+"|sort -u) <(cat "+f2+"|sort -u)")
-		stdout, _ := cmd.Output()
-
-		fmt.Print(string(stdout))
+		initCompare(out, flagArgs)
 	}
 
 }

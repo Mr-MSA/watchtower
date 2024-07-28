@@ -3,11 +3,19 @@ package main
 import (
 	"encoding/base64"
 	"encoding/json"
-	"io/ioutil"
+	"fmt"
+	"io"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 )
+
+type ErrorResponse struct {
+	Message    []string `json:"message"`
+	Error      string   `json:"error"`
+	StatusCode int      `json:"statusCode"`
+}
 
 func MakeHttpRequest(url string, flags intelArgs, reqbody string) string {
 
@@ -38,9 +46,25 @@ func MakeHttpRequest(url string, flags intelArgs, reqbody string) string {
 
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	if resp.StatusCode == 400 {
+
+		var response ErrorResponse
+
+		// Unmarshal the JSON string into the struct
+		if err := json.Unmarshal([]byte(body), &response); err != nil {
+			log.Fatal(err)
+		}
+
+		for _, msg := range response.Message {
+			fmt.Println("ERROR: " + msg)
+		}
+
+		os.Exit(0)
 	}
 
 	return string(body)

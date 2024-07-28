@@ -23,7 +23,13 @@ main_funcs=(
 # first
 help=(
     'flags:Help of flags'
-    'version:Show client version'
+    'get:Help of get commands'
+    'orch:Help of orch commands'
+    'regexp:Help of regexp commands'
+    'put:Help of put commands'
+    'target:Help of target commands'
+    'all:Help of all commands'
+    'version:Show version of watchtower'
 )
 
 regexp=(

@@ -8,36 +8,6 @@ import (
 	"strings"
 )
 
-var flagHelp = `Flags:
-   --body "bodystring" (request body)
-   --body-file "filename" (request body file name)
-   --public-target "program_name" (add public target by name)
-   --method string (http request method)
-		
-   --compare "filename" (compare response)
-   --rc (reverse compare)
-		  
-   --limit (limit results)
-   --loop (get all pages)
-		
-   --count (show count of results)
-   --json (show output as json)
-   --cdn (add cdn=ture)
-   --help (help of flags)
-   --total (add total=true)
-   --internal (add internal=true)
-   --no-limit (add not_limit=true)
-		
-   --date string (set date of results)
-   --provider string (filter by providers)
-   --status string (filter by status)
-   --title string (filter by title)
-   --tech (filter by technology)
-
-   --exclude-domain string (exclude a domain from results)
-   --exclude-provider string (exclude a provider from results)
-   --exclude-scope string (exclude a scope from results)`
-
 type intelArgs struct {
 	JSON            bool
 	Loop            bool
@@ -48,8 +18,11 @@ type intelArgs struct {
 	Help            bool
 	Internal        bool
 	NoLimit         bool
+	OutOfScopes     bool
 	ReverseCompare  bool
 	Tag             string
+	ContentType     string
+	Server          string
 	PublicTarget    string
 	ExcludeScope    string
 	Status          string
@@ -91,9 +64,11 @@ func defineIntelArgumentFlags(intelFlags *flag.FlagSet, args *intelArgs) {
 	intelFlags.Usage = func() {
 		fmt.Println(flagHelp)
 	}
-	intelFlags.StringVar(&args.ResponseHeaders, "response-headers", "", "")
-	intelFlags.StringVar(&args.Technology, "tech", "", "")
-	intelFlags.StringVar(&args.Tag, "tag", "", "")
+	intelFlags.StringVar(&args.ResponseHeaders, "response-headers", "", "filter by response headers")
+	intelFlags.StringVar(&args.Technology, "technology", "", "set technology")
+	intelFlags.StringVar(&args.Server, "server", "", "filter by server header")
+	intelFlags.StringVar(&args.ContentType, "content-type", "", "filter by content-type")
+	intelFlags.StringVar(&args.Tag, "tag", "", "filter by watchtower tags")
 	intelFlags.StringVar(&args.Provider, "provider", "", "set providers")
 	intelFlags.StringVar(&args.Status, "status", "", "match status")
 	intelFlags.StringVar(&args.Title, "title", "", "match title")
@@ -106,6 +81,8 @@ func defineIntelArgumentFlags(intelFlags *flag.FlagSet, args *intelArgs) {
 	intelFlags.StringVar(&args.PublicTarget, "public-target", "", "add public target by name")
 	intelFlags.StringVar(&args.BodyFile, "body-file", "", "request body file")
 	intelFlags.StringVar(&args.Compare, "compare", "", "compare response")
+
+	intelFlags.BoolVar(&args.OutOfScopes, "oos", false, "remove out of scopes")
 	intelFlags.BoolVar(&args.ReverseCompare, "rc", false, "reverse compare")
 	intelFlags.BoolVar(&args.JSON, "json", false, "show output as json")
 	intelFlags.BoolVar(&args.Count, "count", false, "add count=true")
@@ -120,104 +97,57 @@ func defineIntelArgumentFlags(intelFlags *flag.FlagSet, args *intelArgs) {
 
 }
 
-func showHelp(args []string, config map[string]interface{}) {
+func showHelp(args []string) {
 
-	if args[0] != "help" {
-		return
-	}
+	if len(args) == 2 {
 
-	if len(args) == 2 && args[1] == "version" {
-		fmt.Println(version)
-		os.Exit(0)
-	} else if len(args) == 2 && args[1] == "flags" {
-		fmt.Printf(flagHelp)
+		switch args[1] {
+		case "version":
+			fmt.Print(version)
+			os.Exit(0)
+		case "flags":
+			fmt.Print(flagHelp)
+			os.Exit(0)
+		case "get":
+			fmt.Print(getHelp)
+			os.Exit(0)
+		case "orch":
+			fmt.Print(orchHelp)
+			os.Exit(0)
+		case "regexp":
+			fmt.Print(regexHelp)
+			os.Exit(0)
+		case "put":
+			fmt.Print(putHelp)
+			os.Exit(0)
+		case "target":
+			fmt.Print(targetHelp)
+			os.Exit(0)
+		case "all":
+			fmt.Print(getHelp + orchHelp + "\n" + regexHelp + "\n" + putHelp + "\n" + targetHelp)
+			os.Exit(0)
+		default:
+			fmt.Print("Invalid help category")
+			os.Exit(0)
+		}
 	} else {
-		fmt.Printf(`watchtower help flags
-watchtower help version
+		fmt.Printf(`## Show details of watchtower flags:
+watchtower help flags
 
+## Configuration
 watchtower init
 watchtower init autocomplete
-
+watchtower help version
 watchtower update
 
-watchtower get single target {{target_name}}
-watchtower get single subdomain {{subdomain}}
-watchtower get single live {{domain}}
-watchtower get single http {{subdomain}}
+## Help of commands
+watchtower help get
+watchtower help orch 
+watchtower help regexp
+watchtower help put
+watchtower help target
 
-watchtower get subdomains domain {{domain}}
-watchtower get subdomains scope {{scope}}
-watchtower get subdomains all
-
-watchtower get lives scope {{scope}}
-watchtower get lives domain {{domain}}
-watchtower get lives all
-
-watchtower get http scope {{scope}}
-watchtower get http domain {{domain}}
-watchtower get http all
-
-watchtower get latest subdomains domain {{domain}}
-watchtower get latest subdomains scope {{scope}}
-watchtower get latest subdomains all
-
-watchtower get latest lives domain {{domain}}
-watchtower get latest lives scope {{scope}}
-watchtower get latest lives all
-
-watchtower get latest http domain {{domain}}
-watchtower get latest http scope {{scope}}
-watchtower get latest http all
-
-watchtower get targets list
-watchtower get targets public all
-watchtower get targets public platform {{platform}}
-
-watchtower get fresh subdomains all 
-watchtower get fresh subdomains scope {{scope}} 
-watchtower get fresh subdomains domain {{domain}} 
-
-watchtower get fresh lives all 
-watchtower get fresh lives scope {{scope}} 
-watchtower get fresh lives domain {{domain}} 
-
-watchtower get fresh http all 
-watchtower get fresh http scope {{scope}} 
-watchtower get fresh http domain {{domain}} 
-
-watchtower get statistics sqs
-watchtower get technologies list
-
-watchtower regexp list
-watchtower regexp apply -body-file body.txt
-watchtower regexp test scope {{scope}} -body-file body.txt
-watchtower regexp test all  -body-file body.txt
-
-watchtower orch clean database scope {{scope}}
-watchtower orch clean database all 
-watchtower orch clean tags scope {{scope}}
-watchtower orch clean tags all
-watchtower orch clean ips scope {{scope}}
-watchtower orch clean ips all
-watchtower orch clean domains scope {{scope}}
-watchtower orch clean domains all
-watchtower orch passive enum all 
-watchtower orch passive enum scope {{scope}}
-watchtower orch resolution all
-watchtower orch resolution scope {{scope}}
-watchtower orch http all
-watchtower orch http scope {{scope}}
-watchtower orch targets update
-
-watchtower put resolution 
-watchtower put subdomain {{scope}}
-watchtower put orch resolution
-watchtower put orch http
-
-watchtower target delete {{target_name}}
-watchtower target create
-
-(use -body-file body.txt to set body)
+Run 'watchtower help all' to show full help of commands
 `)
 	}
 	os.Exit(0)

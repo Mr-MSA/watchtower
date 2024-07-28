@@ -14,6 +14,10 @@ import (
 	"github.com/joho/godotenv"
 )
 
+type Tech struct {
+	Name string `json:"name"`
+}
+
 const charset = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 func ReadJSON(filename string) map[string]interface{} {
@@ -39,7 +43,7 @@ func envVariable(key string) string {
 		log.Fatal(err)
 	}
 
-	err = godotenv.Load(homedir + "/.watch-client/.env")
+	err = godotenv.Load(homedir + directory + "/.env")
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		os.Exit(2)
@@ -48,6 +52,7 @@ func envVariable(key string) string {
 	val := os.Getenv(key)
 	return val
 }
+
 func downloadFile(filepath string, fileurl string) (err error) {
 
 	// Create blank file
@@ -105,6 +110,7 @@ func setMethod(args []string) string {
 
 	return "GET"
 }
+
 func StringWithCharset(length int, charset string) string {
 	var seededRand *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 
