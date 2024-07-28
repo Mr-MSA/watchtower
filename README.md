@@ -34,6 +34,17 @@ go install github.com/Mr-MSA/watchtower@latest
 watchtower update 
 ```
 
+### Reinstall for new version
+```bash
+rm -rf ~/.watch-client
+go install github.com/Mr-MSA/watchtower@latest
+watchtower init 
+# ---- Set IP, username and password at ~/.watchtower/.env
+watchtower init autocomplete
+zsh
+watchtower help
+```
+
 ### Active Autocomplete
 Execute following commands:
 ```
